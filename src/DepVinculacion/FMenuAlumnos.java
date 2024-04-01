@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package ejemplosArchivosGrafico;
+package DepVinculacion;
 
 import java.awt.print.PrinterException;
 import java.util.ArrayList;
@@ -90,11 +90,6 @@ public class FMenuAlumnos extends javax.swing.JFrame {
                 btnNuevoMouseClicked(evt);
             }
         });
-        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoActionPerformed(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -112,11 +107,6 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEditarMouseClicked(evt);
-            }
-        });
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
             }
         });
 
@@ -169,41 +159,25 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         this.columnas= new String[]{"Num.control","Nombre","Apellidos",
                                     "Semestre","Carrera","Tipo","Descripcion"
                                     };                
-        //Creamos el modelo que contiene el nombre de las columnas y filas 0
         this.dtm =  new DefaultTableModel(this.columnas,0);        
-        //Leemos los registros del archivo y los guardamos en un ArrayList
-        //Creamos el ArrayList
-        //ArrayList<String> listaHuespedes =  new ArrayList();    
+  
                 ArrayList<String> listaHuespedes ;        
 
-        //Enseguida creo la referecia (objeto) de la clase ArchivoTexto que es
-        //la que me da el control para las operaciones con archivos
-        ArchivoTexto objArchivoTexto =  new ArchivoTexto();        
-        //Enseguida verifico si el archivo existe (validar que exista)
+            ArchivoTexto objArchivoTexto =  new ArchivoTexto();        
         if (objArchivoTexto.existeArchivo("db/alumnos.txt")){           
-            //Abro el archivo para lectura de datos
             objArchivoTexto.abrirArchivo("db/alumnos.txt",'r');            
-            //Leemos los registros (Extraemos la información del archivo)
             listaHuespedes = objArchivoTexto.leerLineas();
-            //Usamos un while para recorrer la lista y subir los registros a la tabla
-            //Antes creamos una variable de referencia del tipo iterador             
             Iterator <String> it=listaHuespedes.iterator();
             while(it.hasNext()){  //Si hay registros entra
-                //Extraemos el registro y los separamos (split) en partes 
                 //cuando encuentre una coma y lo pasamos a un arreglo de tipo String
                 String registro[]=it.next().split(",");
-                //Subimos el registro al modelo, y por lo tanto a la tabla
                 dtm.addRow(registro);
             }
-            //Cerramos el archivo
             objArchivoTexto.cerrarArchivo('r');            
         }                
-        //String fila[] ={"123457","Sara","Lopez","Oaxaca","Editar", "Eliminar"};
-        //this.dtm.addRow(fila);
-        this.tblHuespedes.setModel(dtm);
+         this.tblHuespedes.setModel(dtm);
     }
     private void btnNuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevoMouseClicked
-        // TODO add your handling code here:
         FAgregarAlumno objAgregarCliente = new FAgregarAlumno(this.dtm);
         objAgregarCliente.setVisible(true);
         
@@ -214,13 +188,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         int fila = this.tblHuespedes.getSelectedRow();
         JOptionPane.showMessageDialog(this,"Fila seleccionada" + fila);
         if(fila!=-1){
-            // ----------------------------------------------------
-            /*
-              BUSCAR EL HUESPED A ELIMINAR
-              Primero determino que fila seleccioné            
-              Enseguida extraigo el dato de la fila y columna seleccionada
-              En este caso debe ser el numero de identidad        
-            */
+        
             String numIdentidadEliminar = this.tblHuespedes.getValueAt(fila, 0).toString();
             //Abrir el archivo para lectura      
             ArchivoTexto objArchivoTexto =  new ArchivoTexto();                                
@@ -232,38 +200,18 @@ public class FMenuAlumnos extends javax.swing.JFrame {
             //Fin de Buscar ----------------------------------------------
             
             if (encontrado)
-            {   //Si lo encuentra confirmar para eliminar
+            {   
                 int respuesta=JOptionPane.showConfirmDialog(this,"Está seguro que desea eliminarlo?");
                 if(respuesta==0){
-                    /*Si la respuesta es si, Eliminar el registro del archivo de datos                       
-                      Para eliminar usaremos el archivo fuente y un temporal
-                      Abrimos el archivo fuente (original), se abre para lectura
-                      Nota: la referencia objArchivoTexto ya no se crea, se creó lineas antes
-                    */
-                    //ArchivoTexto objArchivoTexto2 = new ArchivoTexto();
                     objArchivoTexto.abrirArchivo("db/alumnos.txt",'r');
-                    /*Abrimos o creamos otra referencia del tipo ArchivoTexto
-                      En este solo le asignamos la referencia del objArchivoTexto
-                      Para que los dos estén apuntando al mismo objeto
-                    */
                     ArchivoTexto objArchivoTextoTemporal = objArchivoTexto;
-                    //Abrimos o creamos el archivo temporal
                     objArchivoTextoTemporal.abrirArchivo("db/temporal.txt",'w');                    
-                    /*Eliminamos el registro, en este caso podemos llamar al método
-                      eliminarRegistro con cualquiera de las dos referencias de tipo
-                      ArchivoTexto
-                    */
                     boolean eliminado = objArchivoTexto.eliminarRegistro(numIdentidadEliminar);
-                    //Cerramos los archivos
                     objArchivoTextoTemporal.cerrarArchivo('w');
                     objArchivoTexto.cerrarArchivo('r');
-                    //borrar el archivo fuente (original)
                     objArchivoTexto.eliminarArchivo("db/alumnos.txt");
-                    //Renombrar el archivo temporal por el nombre original
                     objArchivoTexto.cambiarNombre("db/temporal.txt","db/alumnos.txt");                    
                     if (eliminado){
-                        //Una vez eliminado el registro del archivo, tambien lo eliminamos
-                        //de la tabla.
                         this.dtm.removeRow(fila);
                         JOptionPane.showMessageDialog(this,"Registro Eliminado");
                     }    
@@ -275,11 +223,6 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         else
             JOptionPane.showMessageDialog(this,"Selecciona una fila" );        
     }//GEN-LAST:event_btnEliminarMouseClicked
-
-    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
         // TODO add your handling code here:
@@ -308,10 +251,6 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         objAgregarCliente.setVisible(true);
     }
     }//GEN-LAST:event_btnEditarMouseClicked
-
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-
-    }//GEN-LAST:event_btnEditarActionPerformed
 
     
     /**

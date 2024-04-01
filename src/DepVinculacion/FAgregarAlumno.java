@@ -188,6 +188,8 @@ public class FAgregarAlumno extends javax.swing.JFrame {
     private void guardarRegistro(){
         ArchivoTexto objArchivoTexto =  new ArchivoTexto();
         Alumno objAlumno = new Alumno();
+        
+        
         objAlumno.setNumeroControl(Integer.parseInt(this.txtNumControl.getText()));
         objAlumno.setNombre(this.txtNombre.getText());
         objAlumno.setApellidos(this.txtApellidos.getText());

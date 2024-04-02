@@ -4,12 +4,8 @@
  */
 package DepVinculacion;
 
-import java.awt.print.PrinterException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -32,7 +28,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         txtBuscarCliente = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblHuespedes = new javax.swing.JTable();
+        tblAlumnos = new javax.swing.JTable();
         btnNuevo = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JButton();
@@ -64,7 +60,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
             }
         });
 
-        tblHuespedes.setModel(new javax.swing.table.DefaultTableModel(
+        tblAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -81,8 +77,8 @@ public class FMenuAlumnos extends javax.swing.JFrame {
                 "Num. Control", "Nombre", "Apellidos", "Semestre", "Carrera", "Tipo", "Descipcion"
             }
         ));
-        tblHuespedes.setMaximumSize(new java.awt.Dimension(2147483647, 500));
-        jScrollPane1.setViewportView(tblHuespedes);
+        tblAlumnos.setMaximumSize(new java.awt.Dimension(2147483647, 500));
+        jScrollPane1.setViewportView(tblAlumnos);
 
         btnNuevo.setText("Nuevo");
         btnNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -117,7 +113,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 978, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addComponent(jLabel2)
@@ -148,8 +144,8 @@ public class FMenuAlumnos extends javax.swing.JFrame {
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addComponent(jScrollPane1)
+                .addGap(11, 11, 11))
         );
 
         pack();
@@ -175,7 +171,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
             }
             objArchivoTexto.cerrarArchivo('r');            
         }                
-         this.tblHuespedes.setModel(dtm);
+         this.tblAlumnos.setModel(dtm);
     }
     private void btnNuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevoMouseClicked
         FAgregarAlumno objAgregarCliente = new FAgregarAlumno(this.dtm);
@@ -185,11 +181,11 @@ public class FMenuAlumnos extends javax.swing.JFrame {
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         // TODO add your handling code here:                
-        int fila = this.tblHuespedes.getSelectedRow();
+        int fila = this.tblAlumnos.getSelectedRow();
         JOptionPane.showMessageDialog(this,"Fila seleccionada" + fila);
         if(fila!=-1){
         
-            String numIdentidadEliminar = this.tblHuespedes.getValueAt(fila, 0).toString();
+            String numIdentidadEliminar = this.tblAlumnos.getValueAt(fila, 0).toString();
             //Abrir el archivo para lectura      
             ArchivoTexto objArchivoTexto =  new ArchivoTexto();                                
             objArchivoTexto.abrirArchivo("db/alumnos.txt",'r');            
@@ -226,11 +222,11 @@ public class FMenuAlumnos extends javax.swing.JFrame {
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
         // TODO add your handling code here:
-        String numIdentidadBuscar = this.txtBuscarCliente.getText().toString();
+        String numControl = this.txtBuscarCliente.getText();
         
-        for (int i = 0; i < tblHuespedes.getRowCount(); i++) {           
-           if (tblHuespedes.getValueAt(i, 0).equals(numIdentidadBuscar)) {                                           
-                  tblHuespedes.changeSelection(i, 0, false, false);
+        for (int i = 0; i < tblAlumnos.getRowCount(); i++) {           
+           if (tblAlumnos.getValueAt(i, 0).equals(numControl)) {                                           
+                  tblAlumnos.changeSelection(i, 0, false, false);
                   break;
            }
         }        
@@ -238,17 +234,22 @@ public class FMenuAlumnos extends javax.swing.JFrame {
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
      
-       int fila = this.tblHuespedes.getSelectedRow();
+       int fila = this.tblAlumnos.getSelectedRow();
     if (fila != -1) {
-        String id = this.tblHuespedes.getValueAt(fila, 0).toString();
-        String nombre = this.tblHuespedes.getValueAt(fila, 1).toString();
-        String apellido = this.tblHuespedes.getValueAt(fila, 2).toString();
-        String procedencia = this.tblHuespedes.getValueAt(fila, 3).toString();
+        String numControl = this.tblAlumnos.getValueAt(fila, 0).toString();
+        String nombre = this.tblAlumnos.getValueAt(fila, 1).toString();
+        String apellido = this.tblAlumnos.getValueAt(fila, 2).toString();
+        String semestres = this.tblAlumnos.getValueAt(fila, 3).toString();
+        int semestre = Integer.parseInt(semestres);
+        String carrera = this.tblAlumnos.getValueAt(fila, 4).toString();
+        String tipo = this.tblAlumnos.getValueAt(fila, 5).toString();
+        String descripcion = this.tblAlumnos.getValueAt(fila, 6).toString();
 
-        FActualizarAlumno objAgregarCliente = new FActualizarAlumno(this.dtm);
-        objAgregarCliente.setFilaSeleccionada(fila); // Asignar la fila seleccionada
-        objAgregarCliente.EditForm(id, nombre, apellido, procedencia);
-        objAgregarCliente.setVisible(true);
+        
+        FActualizarAlumnos objAgregarAlumno = new FActualizarAlumnos(this.dtm);
+        objAgregarAlumno.setFilaSeleccionada(fila); // Asignar la fila seleccionada
+        objAgregarAlumno.EditForm(numControl, nombre, apellido, semestre, carrera, tipo, descripcion);
+        objAgregarAlumno.setVisible(true);
     }
     }//GEN-LAST:event_btnEditarMouseClicked
 
@@ -300,7 +301,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblHuespedes;
+    private javax.swing.JTable tblAlumnos;
     private javax.swing.JTextField txtBuscarCliente;
     // End of variables declaration//GEN-END:variables
 }

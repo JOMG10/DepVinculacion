@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -134,6 +135,24 @@ public class ArchivoTexto {
         }
         return false;
     }
+    
+    boolean buscarRe(String numIdentidadBuscar) {
+    abrirArchivo("db/alumnos.txt", 'r'); // Abrir el archivo en modo de lectura
+    try {            
+        String linea = leer.readLine();            
+        while(linea != null) {
+            String[] arreglo = linea.split(",");
+            if(arreglo[0].equals(numIdentidadBuscar))
+                return true;
+            linea = leer.readLine();
+        }                        
+    } catch (IOException ex) {
+        Logger.getLogger(ArchivoTexto.class.getName()).log(Level.SEVERE, null, ex);
+    } finally {
+        cerrarArchivo('r'); // Cerrar el archivo después de terminar de leer
+    }
+    return false;
+}
     
     protected boolean eliminarRegistro(String numIdentidadEliminar){               
         try {            

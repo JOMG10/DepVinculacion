@@ -48,19 +48,20 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="jScrollPane1" max="32767" attributes="0"/>
-                  <Group type="102" alignment="1" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="txtBuscarCliente" min="-2" pref="290" max="-2" attributes="0"/>
+                      <Component id="txtBuscarAlumno" min="-2" pref="290" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnBuscar" min="-2" pref="114" max="-2" attributes="0"/>
-                      <EmptySpace pref="199" max="32767" attributes="0"/>
-                      <Component id="btnAgregarNuevo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                      <EmptySpace pref="318" max="32767" attributes="0"/>
+                      <Component id="btnAgregarNuevo" min="-2" pref="104" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnEliminar" min="-2" pref="98" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnEditar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btnEditar" min="-2" pref="99" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -73,17 +74,21 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnBuscar" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
-                  <Component id="txtBuscarCliente" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
-                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnEditar" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
-                  <Component id="btnEliminar" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
-                  <Component id="btnAgregarNuevo" alignment="3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                      <Component id="btnBuscar" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
+                      <Component id="txtBuscarAlumno" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
+                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnAgregarNuevo" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
+                      <Component id="btnEliminar" alignment="3" min="-2" pref="49" max="-2" attributes="0"/>
+                      <Component id="btnEditar" alignment="3" min="-2" pref="48" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="519" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -98,7 +103,7 @@
         <Property name="text" type="java.lang.String" value="N. Control"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtBuscarCliente">
+    <Component class="javax.swing.JTextField" name="txtBuscarAlumno">
     </Component>
     <Component class="javax.swing.JButton" name="btnBuscar">
       <Properties>

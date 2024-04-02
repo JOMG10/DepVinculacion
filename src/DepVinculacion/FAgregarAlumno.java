@@ -4,6 +4,8 @@
  */
 package DepVinculacion;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -82,7 +84,10 @@ public class FAgregarAlumno extends javax.swing.JFrame {
 
         txtTipo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel8.setText("Descripcion");
+
+        txtDescripcion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         txtSemestre.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
@@ -97,21 +102,18 @@ public class FAgregarAlumno extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(57, 57, 57))
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtNumControl, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)))
+                                .addComponent(txtNumControl, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(57, 57, 57)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel6)
@@ -137,7 +139,7 @@ public class FAgregarAlumno extends javax.swing.JFrame {
                                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(173, 173, 173)
                                 .addComponent(btbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(82, Short.MAX_VALUE))))
+                        .addContainerGap(68, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,19 +190,35 @@ public class FAgregarAlumno extends javax.swing.JFrame {
     private void guardarRegistro(){
         ArchivoTexto objArchivoTexto =  new ArchivoTexto();
         Alumno objAlumno = new Alumno();
+        String numeroControl = this.txtNumControl.getText();
+        String nombre = this.txtNombre.getText();
+        String apellidos = this.txtApellidos.getText();
+        String semestreStr = this.txtSemestre.getValue().toString();
+        int semestre = Integer.parseInt(semestreStr);
+        String carrera = this.txtCarrera.getText();
+        String tipo = this.txtTipo.getText();
+        String descripcion = this.txtDescripcion.getText();
         
-        
-        objAlumno.setNumeroControl(Integer.parseInt(this.txtNumControl.getText()));
-        objAlumno.setNombre(this.txtNombre.getText());
-        objAlumno.setApellidos(this.txtApellidos.getText());
-        
-   String semestreStr = this.txtSemestre.getValue().toString();
-    int semestre = Integer.parseInt(semestreStr);
-    objAlumno.setSemestre(semestre);
-    
-    objAlumno.setCarrera(this.txtCarrera.getText());
-        objAlumno.setTipo(this.txtTipo.getText());
-        objAlumno.setDescripcion(this.txtDescripcion.getText());
+        if (numeroControl.isEmpty() || nombre.isEmpty() || apellidos.isEmpty() 
+                || semestreStr.isEmpty() || carrera.isEmpty() || tipo.isEmpty() 
+                || descripcion.isEmpty()) {
+    JOptionPane.showMessageDialog(null, "Por favor complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+}else{
+            
+                    objArchivoTexto.abrirArchivo("db/alumnos.txt",'r');    
+
+           
+             if(objArchivoTexto.buscarRegistro((numeroControl))){
+            JOptionPane.showMessageDialog(this, "El alumno ya existe");
+        }else{
+        objAlumno.setNumeroControl(Integer.parseInt(numeroControl));
+
+        objAlumno.setNombre(nombre);
+        objAlumno.setApellidos(apellidos);        
+        objAlumno.setSemestre(semestre);    
+        objAlumno.setCarrera(carrera);
+        objAlumno.setTipo(tipo);
+        objAlumno.setDescripcion(descripcion);
         //Abrir el archivo para escritura        
         objArchivoTexto.abrirArchivo("db/alumnos.txt",'w');
         /*Guardar el registro en el archivo
@@ -228,6 +246,11 @@ public class FAgregarAlumno extends javax.swing.JFrame {
                        objAlumno.getTipo(),
                        objAlumno.getDescripcion()};
         this.dtm.addRow(fila);
+        }
+      
+        }
+       
+       
     }
     
     

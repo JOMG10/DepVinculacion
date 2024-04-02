@@ -29,10 +29,10 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAlumnos = new javax.swing.JTable();
-        btnNuevo = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
+        btnAgregarNuevo = new javax.swing.JButton();
 
         jInternalFrame1.setVisible(true);
 
@@ -80,13 +80,6 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         tblAlumnos.setMaximumSize(new java.awt.Dimension(2147483647, 500));
         jScrollPane1.setViewportView(tblAlumnos);
 
-        btnNuevo.setText("Nuevo");
-        btnNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnNuevoMouseClicked(evt);
-            }
-        });
-
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ALUMNOS TITULADOS");
@@ -106,6 +99,13 @@ public class FMenuAlumnos extends javax.swing.JFrame {
             }
         });
 
+        btnAgregarNuevo.setText("Agregar");
+        btnAgregarNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAgregarNuevoMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -121,9 +121,9 @@ public class FMenuAlumnos extends javax.swing.JFrame {
                         .addComponent(txtBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
+                        .addComponent(btnAgregarNuevo)
+                        .addGap(49, 49, 49)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEditar)))
@@ -142,10 +142,10 @@ public class FMenuAlumnos extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(btnAgregarNuevo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1)
-                .addGap(11, 11, 11))
+                .addGap(17, 17, 17))
         );
 
         pack();
@@ -173,12 +173,6 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         }                
          this.tblAlumnos.setModel(dtm);
     }
-    private void btnNuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevoMouseClicked
-        FAgregarAlumno objAgregarCliente = new FAgregarAlumno(this.dtm);
-        objAgregarCliente.setVisible(true);
-        
-    }//GEN-LAST:event_btnNuevoMouseClicked
-
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         // TODO add your handling code here:                
         int fila = this.tblAlumnos.getSelectedRow();
@@ -253,6 +247,11 @@ public class FMenuAlumnos extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_btnEditarMouseClicked
 
+    private void btnAgregarNuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarNuevoMouseClicked
+        FAgregarAlumno objAgregarAlumno = new FAgregarAlumno(this.dtm);
+        objAgregarAlumno.setVisible(true);
+    }//GEN-LAST:event_btnAgregarNuevoMouseClicked
+
     
     /**
      * @param args the command line arguments
@@ -293,10 +292,10 @@ public class FMenuAlumnos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregarNuevo;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnNuevo;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

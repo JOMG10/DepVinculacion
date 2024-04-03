@@ -40,11 +40,11 @@ public class FActualizarAlumnos extends javax.swing.JFrame {
         btbCancelar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        txtCarrera = new javax.swing.JTextField();
         txtTipo = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtDescripcion = new javax.swing.JTextField();
         txtSemestre = new javax.swing.JSpinner();
+        txtCarrera = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Agregar Cliente");
@@ -91,8 +91,6 @@ public class FActualizarAlumnos extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel7.setText("Tipo");
 
-        txtCarrera.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-
         txtTipo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -101,6 +99,9 @@ public class FActualizarAlumnos extends javax.swing.JFrame {
         txtDescripcion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         txtSemestre.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        txtCarrera.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Informatica", "Tics", "Agronomia", "Forestal", "Biologia" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -128,8 +129,8 @@ public class FActualizarAlumnos extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -138,7 +139,7 @@ public class FActualizarAlumnos extends javax.swing.JFrame {
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 96, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -174,8 +175,8 @@ public class FActualizarAlumnos extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                    .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -207,7 +208,7 @@ public class FActualizarAlumnos extends javax.swing.JFrame {
         this.txtNombre.setText(nombre);
         this.txtApellidos.setText(apellido); 
         this.txtSemestre.setValue(semestre);
-        this.txtCarrera.setText(carrera);
+        this.txtCarrera.setSelectedItem(carrera);
         this.txtTipo.setText(tipo);
         this.txtDescripcion.setText(descripcion);
      }
@@ -218,7 +219,8 @@ public class FActualizarAlumnos extends javax.swing.JFrame {
         String nuevoApellido = txtApellidos.getText();
         String semestreStr = this.txtSemestre.getValue().toString();
         int nuevoSemestre = Integer.parseInt(semestreStr); 
-        String nuevaCarrera = this.txtCarrera.getText();
+        String nuevaCarrera = (String) txtCarrera.getSelectedItem();
+
         String nuevoTipo =  this.txtTipo.getText();
         String nuevaDescripcion = this.txtDescripcion.getText();
         
@@ -259,7 +261,7 @@ public class FActualizarAlumnos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField txtApellidos;
-    private javax.swing.JTextField txtCarrera;
+    private javax.swing.JComboBox<String> txtCarrera;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNumControl;

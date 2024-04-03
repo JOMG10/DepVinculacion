@@ -58,6 +58,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
 
         txtBuscarAlumno.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
+        btnBuscar.setBackground(new java.awt.Color(153, 255, 153));
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -89,11 +90,12 @@ public class FMenuAlumnos extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("ALUMNOS TITULADOS");
+        jLabel1.setText("DEPARTAMENTO DE GESTION TECNOLOGICA Y VINCULACION");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        btnEliminar.setBackground(new java.awt.Color(153, 255, 255));
+        btnEliminar.setBackground(new java.awt.Color(51, 153, 255));
         btnEliminar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminar.setText("Eliminar");
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -101,8 +103,9 @@ public class FMenuAlumnos extends javax.swing.JFrame {
             }
         });
 
-        btnEditar.setBackground(new java.awt.Color(153, 255, 255));
+        btnEditar.setBackground(new java.awt.Color(51, 153, 255));
         btnEditar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnEditar.setForeground(new java.awt.Color(255, 255, 255));
         btnEditar.setText("Editar");
         btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -110,8 +113,9 @@ public class FMenuAlumnos extends javax.swing.JFrame {
             }
         });
 
-        btnAgregarNuevo.setBackground(new java.awt.Color(153, 255, 255));
+        btnAgregarNuevo.setBackground(new java.awt.Color(51, 153, 255));
         btnAgregarNuevo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnAgregarNuevo.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregarNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DepVinculacion/imagenes/image (1).png"))); // NOI18N
         btnAgregarNuevo.setText("Agregar");
         btnAgregarNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -283,6 +287,8 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         objAgregarAlumno.setFilaSeleccionada(fila); // Asignar la fila seleccionada
         objAgregarAlumno.EditForm(numControl, nombre, apellido, semestre, carrera, tipo, descripcion);
         objAgregarAlumno.setVisible(true);
+    }else{
+        JOptionPane.showMessageDialog(this, "Selecciona una fila");
     }
     }//GEN-LAST:event_btnEditarMouseClicked
 

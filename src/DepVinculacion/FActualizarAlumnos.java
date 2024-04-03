@@ -5,15 +5,14 @@
 package DepVinculacion;
 
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
 public class FActualizarAlumnos extends javax.swing.JFrame {
 
 
-     DefaultTableModel dtm;
-         private int filaSeleccionada; // Variable para guardar la fila seleccionada
+    DefaultTableModel dtm;
+    private int filaSeleccionada; 
 
     public FActualizarAlumnos(DefaultTableModel dtm) {
         initComponents();
@@ -198,8 +197,6 @@ public class FActualizarAlumnos extends javax.swing.JFrame {
     private void btbCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btbCancelarMouseClicked
                 dispose();
     }//GEN-LAST:event_btbCancelarMouseClicked
-
-    private javax.swing.JComboBox<String> comboBox;
 
      protected void  EditForm(String id, String nombre, String apellido, int semestre,
              String carrera, String tipo,String descripcion ) {//     

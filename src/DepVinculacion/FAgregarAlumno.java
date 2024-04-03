@@ -34,11 +34,11 @@ public class FAgregarAlumno extends javax.swing.JFrame {
         btbCancelar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        txtCarrera = new javax.swing.JTextField();
         txtTipo = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtDescripcion = new javax.swing.JTextField();
         txtSemestre = new javax.swing.JSpinner();
+        txtCarrera = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Agregar Cliente");
@@ -73,14 +73,17 @@ public class FAgregarAlumno extends javax.swing.JFrame {
         });
 
         btbCancelar.setText("CANCELAR");
+        btbCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btbCancelarMouseClicked(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Carrera");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel7.setText("Tipo");
-
-        txtCarrera.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         txtTipo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
@@ -90,6 +93,9 @@ public class FAgregarAlumno extends javax.swing.JFrame {
         txtDescripcion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         txtSemestre.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        txtCarrera.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Informatica", "tics", "Agronomia", "Forestal", "Biologia" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,18 +122,21 @@ public class FAgregarAlumno extends javax.swing.JFrame {
                         .addGap(57, 57, 57)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtCarrera, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 109, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(txtSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -137,7 +146,7 @@ public class FAgregarAlumno extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(229, 229, 229)
                                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(173, 173, 173)
+                                .addGap(55, 55, 55)
                                 .addComponent(btbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(68, Short.MAX_VALUE))))
         );
@@ -163,8 +172,8 @@ public class FAgregarAlumno extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                    .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -185,6 +194,12 @@ public class FAgregarAlumno extends javax.swing.JFrame {
         this.txtNumControl.requestFocus();                                    
     }//GEN-LAST:event_btnGuardarMouseClicked
 
+    private void btbCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btbCancelarMouseClicked
+        // TODO add your handling code here:
+                        dispose();
+
+    }//GEN-LAST:event_btbCancelarMouseClicked
+
     private javax.swing.JComboBox<String> comboBox;
 
     private void guardarRegistro(){
@@ -195,15 +210,20 @@ public class FAgregarAlumno extends javax.swing.JFrame {
         String apellidos = this.txtApellidos.getText();
         String semestreStr = this.txtSemestre.getValue().toString();
         int semestre = Integer.parseInt(semestreStr);
-        String carrera = this.txtCarrera.getText();
+        String carrera = (String) txtCarrera.getSelectedItem();
         String tipo = this.txtTipo.getText();
         String descripcion = this.txtDescripcion.getText();
         
+         if (!numeroControl.matches("\\d+")) {
+        JOptionPane.showMessageDialog(null, "El número de control debe contener solo números.", "Error", JOptionPane.ERROR_MESSAGE);
+        return; // Salir del método si el número de control no es válido
+    }else{
+              
         if (numeroControl.isEmpty() || nombre.isEmpty() || apellidos.isEmpty() 
                 || semestreStr.isEmpty() || carrera.isEmpty() || tipo.isEmpty() 
                 || descripcion.isEmpty()) {
     JOptionPane.showMessageDialog(null, "Por favor complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-}else{
+         }else{
             
                     objArchivoTexto.abrirArchivo("db/alumnos.txt",'r');    
 
@@ -246,9 +266,15 @@ public class FAgregarAlumno extends javax.swing.JFrame {
                        objAlumno.getTipo(),
                        objAlumno.getDescripcion()};
         this.dtm.addRow(fila);
+        
+            JOptionPane.showMessageDialog(this, "Se ha agregado el alumno correctamente");
+
         }
       
         }
+       
+         }
+    
        
        
     }
@@ -259,7 +285,6 @@ public class FAgregarAlumno extends javax.swing.JFrame {
         this.txtNombre.setText("");
         this.txtApellidos.setText("");
         this.txtSemestre.setValue(0);
-        this.txtCarrera.setText("");
         this.txtTipo.setText("");
         this.txtDescripcion.setText("");
     }
@@ -277,7 +302,7 @@ public class FAgregarAlumno extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField txtApellidos;
-    private javax.swing.JTextField txtCarrera;
+    private javax.swing.JComboBox<String> txtCarrera;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNumControl;

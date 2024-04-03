@@ -162,7 +162,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
   
                 ArrayList<String> listaHuespedes ;        
 
-            ArchivoTexto objArchivoTexto =  new ArchivoTexto();        
+        ArchivoTexto objArchivoTexto = new ArchivoTexto();
         if (objArchivoTexto.existeArchivo("db/alumnos.txt")){           
             objArchivoTexto.abrirArchivo("db/alumnos.txt",'r');            
             listaHuespedes = objArchivoTexto.leerLineas();
@@ -177,64 +177,69 @@ public class FMenuAlumnos extends javax.swing.JFrame {
          this.tblAlumnos.setModel(dtm);
     }
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        // TODO add your handling code here:                
-        int fila = this.tblAlumnos.getSelectedRow();
-        if(fila!=-1){
+      int fila = this.tblAlumnos.getSelectedRow();
+    if (fila != -1) {
+        String numIdentidadEliminar = this.tblAlumnos.getValueAt(fila, 0).toString();
         
-            String numIdentidadEliminar = this.tblAlumnos.getValueAt(fila, 0).toString();
-            //Abrir el archivo para lectura      
-            ArchivoTexto objArchivoTexto =  new ArchivoTexto();                                
-            objArchivoTexto.abrirArchivo("db/alumnos.txt",'r');            
-            //Buscamos el registro, si lo encuentra retornamos un true
-            boolean encontrado=objArchivoTexto.buscarRegistro(numIdentidadEliminar);
-            //Cerramos el archivo
-            objArchivoTexto.cerrarArchivo('r');            
-            //Fin de Buscar ----------------------------------------------
-            
-            if (encontrado)
-            {   
-                int respuesta=JOptionPane.showConfirmDialog(this,"Está seguro que desea eliminarlo?");
-                if(respuesta==0){
-                    objArchivoTexto.abrirArchivo("db/alumnos.txt",'r');
-                    ArchivoTexto objArchivoTextoTemporal = objArchivoTexto;
-                    objArchivoTextoTemporal.abrirArchivo("db/temporal.txt",'w');                    
-                    boolean eliminado = objArchivoTexto.eliminarRegistro(numIdentidadEliminar);
-                    objArchivoTextoTemporal.cerrarArchivo('w');
-                    objArchivoTexto.cerrarArchivo('r');
-                    objArchivoTexto.eliminarArchivo("db/alumnos.txt");
-                    objArchivoTexto.cambiarNombre("db/temporal.txt","db/alumnos.txt");                    
-                    if (eliminado){
-                        this.dtm.removeRow(fila);
-                        JOptionPane.showMessageDialog(this,"Registro Eliminado");
-                    }    
-                }    
-            }        
-            else
-                JOptionPane.showMessageDialog(this,"El registro no existe");
+        // Abrir el archivo para lectura
+        ArchivoTexto objArchivoTexto = new ArchivoTexto();
+        objArchivoTexto.abrirArchivo("db/alumnos.txt", 'r');
+        
+        // Buscar el registro
+        boolean encontrado = objArchivoTexto.buscarRegistro(numIdentidadEliminar);
+        
+        if (encontrado) {
+            int respuesta = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminarlo?");
+            if (respuesta == 0) {
+                // Abrir archivo original para lectura
+                objArchivoTexto.abrirArchivo("db/alumnos.txt", 'r');
+                // Abrir archivo temporal para escritura
+                ArchivoTexto objArchivoTextoTemporal = new ArchivoTexto();
+                objArchivoTextoTemporal.abrirArchivo("db/temporal.txt", 'w');
+                
+                // Eliminar registro del archivo original y escribir en el archivo temporal
+                boolean eliminado = objArchivoTexto.eliminarRegistro(numIdentidadEliminar, objArchivoTextoTemporal);
+                
+                // Cerrar archivos
+                objArchivoTextoTemporal.cerrarArchivo('w');
+                objArchivoTexto.cerrarArchivo('r');
+                
+                // Reemplazar archivo original con archivo temporal
+                objArchivoTexto.eliminarArchivo("db/alumnos.txt");
+                objArchivoTextoTemporal.cambiarNombre("db/temporal.txt", "db/alumnos.txt");
+                
+                if (eliminado) {
+                    this.dtm.removeRow(fila);
+                    JOptionPane.showMessageDialog(this, "Registro Eliminado");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al eliminar el registro");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "El registro no existe");
         }
-        else
-            JOptionPane.showMessageDialog(this,"Selecciona una fila" );        
+    } else {
+        JOptionPane.showMessageDialog(this, "Selecciona una fila");
+    }
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
-        // TODO add your handling code here:
-        
-            String numControl = this.txtBuscarAlumno.getText();
-          boolean encontrado = false; // Variable para indicar si se encontró el número de control
+        String numControl = this.txtBuscarAlumno.getText();
+        boolean encontrado = false; // Variable para indicar si se encontró el número de control
 
-          for (int i = 0; i < tblAlumnos.getRowCount(); i++) {           
-              if (tblAlumnos.getValueAt(i, 0).equals(numControl)) {                                           
-                  tblAlumnos.changeSelection(i, 0, false, false);
-                  encontrado = true; // Marcamos que se ha encontrado el número de control
-                  break;
-              }
-              limpiarCajas();
-          }        
+        for (int i = 0; i < tblAlumnos.getRowCount(); i++) {           
+            if (tblAlumnos.getValueAt(i, 0).equals(numControl)) {                                           
+                tblAlumnos.changeSelection(i, 0, false, false);
+                encontrado = true; // Marcamos que se ha encontrado el número de control
+                break;
+            }
+            limpiarCajas();
+        }        
 
-          // Si no se encontró el número de control, mostrar un mensaje de error
-          if (!encontrado) {
-              JOptionPane.showMessageDialog(null, "No se encontró el alumno con el número de control especificado.", "Error", JOptionPane.ERROR_MESSAGE);
-          }
+        // Si no se encontró el número de control, mostrar un mensaje de error
+        if (!encontrado) {
+            JOptionPane.showMessageDialog(null, "No se encontró el alumno con el número de control especificado.", "Error", JOptionPane.ERROR_MESSAGE);
+        }        
       
     }//GEN-LAST:event_btnBuscarMouseClicked
 

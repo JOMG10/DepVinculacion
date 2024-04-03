@@ -20,51 +20,46 @@ import java.util.logging.Logger;
  */
 public class ArchivoTexto {
     
-    File archivo;
-    FileWriter fWriter;                                               
-    FileReader fReader;
-    BufferedWriter escribir;
-    BufferedReader leer;
+   
+    private File archivo;
+    private FileWriter fWriter;                                               
+    private FileReader fReader;
+    private BufferedWriter escribir;
+    private BufferedReader leer;
         
-    public ArchivoTexto(){        
-        this.fWriter=null;
-        this.fReader= null;
-        this.escribir=null;
+    public ArchivoTexto() {        
+        this.fWriter = null;
+        this.fReader = null;
+        this.escribir = null;
         this.leer = null;        
         this.archivo = null;
     }
     
-    protected boolean existeArchivo(String nombreArchivo){    
+    protected boolean existeArchivo(String nombreArchivo) {    
         return new File(nombreArchivo).exists();
     }
        
-    protected void abrirArchivo(String nombreArchivo, char modo){
+    protected void abrirArchivo(String nombreArchivo, char modo) {
         this.archivo = new File(nombreArchivo);
-        switch(modo){
-            case 'w': {
-                try {
-                    fWriter = new FileWriter(this.archivo,true);
+        try {
+            switch (modo) {
+                case 'w':
+                    fWriter = new FileWriter(this.archivo, true);
                     escribir = new BufferedWriter(fWriter); 
                     break;
-                } catch (IOException ex) {
-                    Logger.getLogger(ArchivoTexto.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-
-            case 'r':{
-                try {
+                case 'r':
                     fReader = new FileReader(this.archivo);
                     leer = new BufferedReader(fReader);   
                     break;
-                } catch (IOException ex) {
-                    Logger.getLogger(ArchivoTexto.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                default:
+                    throw new IllegalArgumentException("Modo de apertura no válido: " + modo);
             }
+        } catch (IOException ex) {
+            Logger.getLogger(ArchivoTexto.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
     
-    protected void escribirRegistro(String registro){
+    protected void escribirRegistro(String registro) {
         try {
             escribir.write(registro);
         } catch (IOException ex) {
@@ -72,91 +67,94 @@ public class ArchivoTexto {
         }
     }
  
-    
-    //Leer y regresar una lista de lineas 
-    protected ArrayList<String> leerLineas(){
-        ArrayList<String> listaHuespedes = new ArrayList();
+    protected ArrayList<String> leerLineas() {
+        ArrayList<String> listaHuespedes = new ArrayList<>();
         try {            
-            String linea=leer.readLine();
-            while(linea!=null){
+            String linea = leer.readLine();
+            while (linea != null) {
                 listaHuespedes.add(linea);
-                linea=leer.readLine();
+                linea = leer.readLine();
             }            
         } catch (IOException ex) {
             Logger.getLogger(ArchivoTexto.class.getName()).log(Level.SEVERE, null, ex);
-        }        
-            return listaHuespedes;
+        } finally {
+            cerrarArchivo('r');
+        }
+        return listaHuespedes;
     }
        
-    protected void cerrarArchivo(char modo){
-        switch(modo){
-            case 'w': {
-                        try {
-                            escribir.close();                                                
-                        } catch (IOException ex) {
-                            Logger.getLogger(ArchivoTexto.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        try {
-                            fWriter.close();
-                        } catch (IOException ex) {
-                            Logger.getLogger(ArchivoTexto.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+    protected void cerrarArchivo(char modo) {
+        try {
+            switch (modo) {
+                case 'w':
+                    if (escribir != null) {
+                        escribir.close();
+                    }
+                    if (fWriter != null) {
+                        fWriter.close();
+                    }
+                    break;
+                case 'r':
+                    if (leer != null) {
+                        leer.close();
+                    }
+                    if (fReader != null) {
+                        fReader.close();
+                    }
+                    break;
+                default:
+                    throw new IllegalArgumentException("Modo de cierre no válido: " + modo);
             }
-            break;
-            case 'r':{                
-                try {
-                            leer.close();                                                
-                        } catch (IOException ex) {
-                            Logger.getLogger(ArchivoTexto.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        try {
-                            fReader.close();
-                        } catch (IOException ex) {
-                            Logger.getLogger(ArchivoTexto.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-            }
-            break;
+        } catch (IOException ex) {
+            Logger.getLogger(ArchivoTexto.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
 
     boolean buscarRegistro(String numIdentidadBuscar) {
         try {            
-            String linea=leer.readLine();            
-            while(linea!=null){
+            String linea = leer.readLine();            
+            while (linea != null) {
                 String[] arreglo = linea.split(",");
-                if(arreglo[0].equals(numIdentidadBuscar))
+                if (arreglo[0].equals(numIdentidadBuscar)) {
                     return true;
-                linea=leer.readLine();
+                }
+                linea = leer.readLine();
             }                        
         } catch (IOException ex) {
             Logger.getLogger(ArchivoTexto.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            cerrarArchivo('r');
         }
         return false;
     }
     
-    protected boolean eliminarRegistro(String numIdentidadEliminar){               
-        try {            
-            String linea=leer.readLine();                
-            while(linea!=null){                                
-                String[] arreglo = linea.split(",");
-                if(!(arreglo[0].equals(numIdentidadEliminar)))
-                   escribir.write(linea+"\n");
-                linea=leer.readLine();
-            }                  
-        } catch (IOException ex) {
-            Logger.getLogger(ArchivoTexto.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
-        return true;                       
-    }
     
-    protected boolean eliminarArchivo(String nombreArchivo){
+    protected boolean eliminarRegistro(String numIdentidadEliminar, ArchivoTexto archivoTemporal) {               
+    try {            
+        String linea = leer.readLine();                
+        while (linea != null) {                                
+            String[] arreglo = linea.split(",");
+            if (!(arreglo[0].equals(numIdentidadEliminar))) {
+                archivoTemporal.escribirRegistro(linea + "\n");
+            }
+            linea = leer.readLine();
+        }                  
+    } catch (IOException ex) {
+        Logger.getLogger(ArchivoTexto.class.getName()).log(Level.SEVERE, null, ex);
+        return false;
+    } finally {
+        cerrarArchivo('r');
+    }
+    return true;                       
+}
+
+    
+    protected boolean eliminarArchivo(String nombreArchivo) {
         File archivoFuente = new File(nombreArchivo);
         return archivoFuente.delete();
     }
     
-    protected void cambiarNombre(String nombreArchivoActual, String nombreArchivoNuevo){
+    protected void cambiarNombre(String nombreArchivoActual, String nombreArchivoNuevo) {
         File archivoActual = new File(nombreArchivoActual);
         File archivoNuevo = new File(nombreArchivoNuevo);
         archivoActual.renameTo(archivoNuevo);        
@@ -172,8 +170,6 @@ public class ArchivoTexto {
         } catch (IOException e) {
             e.printStackTrace();
         }  
-    
     }
- 
     
 }

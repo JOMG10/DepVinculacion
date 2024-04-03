@@ -4,7 +4,10 @@
  */
 package DepVinculacion;
 
+import java.awt.Color;
 import java.util.ArrayList;
+import java.awt.Font;
+
 import java.util.Iterator;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -25,14 +28,14 @@ public class FMenuAlumnos extends javax.swing.JFrame {
 
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jLabel2 = new javax.swing.JLabel();
-        txtBuscarCliente = new javax.swing.JTextField();
+        txtBuscarAlumno = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAlumnos = new javax.swing.JTable();
-        btnNuevo = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
+        btnAgregarNuevo = new javax.swing.JButton();
 
         jInternalFrame1.setVisible(true);
 
@@ -53,6 +56,8 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("N. Control");
 
+        txtBuscarAlumno.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
         btnBuscar.setText("Buscar");
         btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -60,6 +65,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
             }
         });
 
+        tblAlumnos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         tblAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -80,18 +86,13 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         tblAlumnos.setMaximumSize(new java.awt.Dimension(2147483647, 500));
         jScrollPane1.setViewportView(tblAlumnos);
 
-        btnNuevo.setText("Nuevo");
-        btnNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnNuevoMouseClicked(evt);
-            }
-        });
-
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ALUMNOS TITULADOS");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        btnEliminar.setBackground(new java.awt.Color(0, 153, 255));
+        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminar.setText("Eliminar");
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -99,6 +100,8 @@ public class FMenuAlumnos extends javax.swing.JFrame {
             }
         });
 
+        btnEditar.setBackground(new java.awt.Color(0, 153, 255));
+        btnEditar.setForeground(new java.awt.Color(255, 255, 255));
         btnEditar.setText("Editar");
         btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -106,52 +109,68 @@ public class FMenuAlumnos extends javax.swing.JFrame {
             }
         });
 
+        btnAgregarNuevo.setBackground(new java.awt.Color(153, 255, 255));
+        btnAgregarNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DepVinculacion/imagenes/image (1).png"))); // NOI18N
+        btnAgregarNuevo.setText("Agregar");
+        btnAgregarNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAgregarNuevoMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1231, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
+                        .addGap(36, 36, 36)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtBuscarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
+                        .addComponent(btnAgregarNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEditar)))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)))
                 .addContainerGap())
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabel1)
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1)
-                .addGap(11, 11, 11))
+                .addGap(46, 46, 46)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtBuscarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAgregarNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(45, 45, 45)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     private void llenarTabla(){
+        
+        tblAlumnos.setRowHeight(30);
+        tblAlumnos.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16)); 
+
         this.columnas= new String[]{"Num.control","Nombre","Apellidos",
                                     "Semestre","Carrera","Tipo","Descripcion"
                                     };                
@@ -159,7 +178,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
   
                 ArrayList<String> listaHuespedes ;        
 
-            ArchivoTexto objArchivoTexto =  new ArchivoTexto();        
+        ArchivoTexto objArchivoTexto = new ArchivoTexto();
         if (objArchivoTexto.existeArchivo("db/alumnos.txt")){           
             objArchivoTexto.abrirArchivo("db/alumnos.txt",'r');            
             listaHuespedes = objArchivoTexto.leerLineas();
@@ -173,65 +192,78 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         }                
          this.tblAlumnos.setModel(dtm);
     }
-    private void btnNuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevoMouseClicked
-        FAgregarAlumno objAgregarCliente = new FAgregarAlumno(this.dtm);
-        objAgregarCliente.setVisible(true);
-        
-    }//GEN-LAST:event_btnNuevoMouseClicked
-
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        // TODO add your handling code here:                
-        int fila = this.tblAlumnos.getSelectedRow();
-        JOptionPane.showMessageDialog(this,"Fila seleccionada" + fila);
-        if(fila!=-1){
+      int fila = this.tblAlumnos.getSelectedRow();
+    if (fila != -1) {
+        String numIdentidadEliminar = this.tblAlumnos.getValueAt(fila, 0).toString();
         
-            String numIdentidadEliminar = this.tblAlumnos.getValueAt(fila, 0).toString();
-            //Abrir el archivo para lectura      
-            ArchivoTexto objArchivoTexto =  new ArchivoTexto();                                
-            objArchivoTexto.abrirArchivo("db/alumnos.txt",'r');            
-            //Buscamos el registro, si lo encuentra retornamos un true
-            boolean encontrado=objArchivoTexto.buscarRegistro(numIdentidadEliminar);
-            //Cerramos el archivo
-            objArchivoTexto.cerrarArchivo('r');            
-            //Fin de Buscar ----------------------------------------------
-            
-            if (encontrado)
-            {   
-                int respuesta=JOptionPane.showConfirmDialog(this,"Está seguro que desea eliminarlo?");
-                if(respuesta==0){
-                    objArchivoTexto.abrirArchivo("db/alumnos.txt",'r');
-                    ArchivoTexto objArchivoTextoTemporal = objArchivoTexto;
-                    objArchivoTextoTemporal.abrirArchivo("db/temporal.txt",'w');                    
-                    boolean eliminado = objArchivoTexto.eliminarRegistro(numIdentidadEliminar);
-                    objArchivoTextoTemporal.cerrarArchivo('w');
-                    objArchivoTexto.cerrarArchivo('r');
-                    objArchivoTexto.eliminarArchivo("db/alumnos.txt");
-                    objArchivoTexto.cambiarNombre("db/temporal.txt","db/alumnos.txt");                    
-                    if (eliminado){
-                        this.dtm.removeRow(fila);
-                        JOptionPane.showMessageDialog(this,"Registro Eliminado");
-                    }    
-                }    
-            }        
-            else
-                JOptionPane.showMessageDialog(this,"El registro no existe");
+        // Abrir el archivo para lectura
+        ArchivoTexto objArchivoTexto = new ArchivoTexto();
+        objArchivoTexto.abrirArchivo("db/alumnos.txt", 'r');
+        
+        // Buscar el registro
+        boolean encontrado = objArchivoTexto.buscarRegistro(numIdentidadEliminar);
+        
+        if (encontrado) {
+            int respuesta = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminarlo?");
+            if (respuesta == 0) {
+                // Abrir archivo original para lectura
+                objArchivoTexto.abrirArchivo("db/alumnos.txt", 'r');
+                // Abrir archivo temporal para escritura
+                ArchivoTexto objArchivoTextoTemporal = new ArchivoTexto();
+                objArchivoTextoTemporal.abrirArchivo("db/temporal.txt", 'w');
+                
+                // Eliminar registro del archivo original y escribir en el archivo temporal
+                boolean eliminado = objArchivoTexto.eliminarRegistro(numIdentidadEliminar, objArchivoTextoTemporal);
+                
+                // Cerrar archivos
+                objArchivoTextoTemporal.cerrarArchivo('w');
+                objArchivoTexto.cerrarArchivo('r');
+                
+                // Reemplazar archivo original con archivo temporal
+                objArchivoTexto.eliminarArchivo("db/alumnos.txt");
+                objArchivoTextoTemporal.cambiarNombre("db/temporal.txt", "db/alumnos.txt");
+                
+                if (eliminado) {
+                    this.dtm.removeRow(fila);
+                    JOptionPane.showMessageDialog(this, "Registro Eliminado");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al eliminar el registro");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "El registro no existe");
         }
-        else
-            JOptionPane.showMessageDialog(this,"Selecciona una fila" );        
+    } else {
+        JOptionPane.showMessageDialog(this, "Selecciona una fila");
+    }
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
-        // TODO add your handling code here:
-        String numControl = this.txtBuscarCliente.getText();
-        
+        String numControl = this.txtBuscarAlumno.getText();
+        boolean encontrado = false; // Variable para indicar si se encontró el número de control
+
         for (int i = 0; i < tblAlumnos.getRowCount(); i++) {           
-           if (tblAlumnos.getValueAt(i, 0).equals(numControl)) {                                           
-                  tblAlumnos.changeSelection(i, 0, false, false);
-                  break;
-           }
+            if (tblAlumnos.getValueAt(i, 0).equals(numControl)) {                                           
+                tblAlumnos.changeSelection(i, 0, false, false);
+                encontrado = true; // Marcamos que se ha encontrado el número de control
+                break;
+            }
+            limpiarCajas();
         }        
+
+        // Si no se encontró el número de control, mostrar un mensaje de error
+        if (!encontrado) {
+            JOptionPane.showMessageDialog(null, "No se encontró el alumno con el número de control especificado.", "Error", JOptionPane.ERROR_MESSAGE);
+        }        
+      
     }//GEN-LAST:event_btnBuscarMouseClicked
 
+    
+       private void limpiarCajas(){
+        this.txtBuscarAlumno.setText("");
+  
+    }
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
      
        int fila = this.tblAlumnos.getSelectedRow();
@@ -252,6 +284,11 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         objAgregarAlumno.setVisible(true);
     }
     }//GEN-LAST:event_btnEditarMouseClicked
+
+    private void btnAgregarNuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarNuevoMouseClicked
+        FAgregarAlumno objAgregarAlumno = new FAgregarAlumno(this.dtm);
+        objAgregarAlumno.setVisible(true);
+    }//GEN-LAST:event_btnAgregarNuevoMouseClicked
 
     
     /**
@@ -293,15 +330,15 @@ public class FMenuAlumnos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregarNuevo;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnNuevo;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblAlumnos;
-    private javax.swing.JTextField txtBuscarCliente;
+    private javax.swing.JTextField txtBuscarAlumno;
     // End of variables declaration//GEN-END:variables
 }

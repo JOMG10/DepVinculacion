@@ -189,7 +189,6 @@ public class FAgregarAlumno extends javax.swing.JFrame {
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         // TODO add your handling code here:
         guardarRegistro();
-        limpiarCajas();
         this.txtNumControl.requestFocus();                                    
     }//GEN-LAST:event_btnGuardarMouseClicked
 
@@ -213,58 +212,58 @@ public class FAgregarAlumno extends javax.swing.JFrame {
         String tipo = this.txtTipo.getText();
         String descripcion = this.txtDescripcion.getText();
         
-         if (!numeroControl.matches("\\d+")) {
+        if (!numeroControl.matches("\\d+")) {
         JOptionPane.showMessageDialog(null, "El número de control debe contener solo números.", "Error", JOptionPane.ERROR_MESSAGE);
         return; // Salir del método si el número de control no es válido
-    }else{
+          }else{
               
-        if (numeroControl.isEmpty() || nombre.isEmpty() || apellidos.isEmpty() 
-                || semestreStr.isEmpty() || carrera.isEmpty() || tipo.isEmpty() 
-                || descripcion.isEmpty()) {
-    JOptionPane.showMessageDialog(null, "Por favor complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-         }else{
-            
-                    objArchivoTexto.abrirArchivo("db/alumnos.txt",'r');    
+            if (numeroControl.isEmpty() || nombre.isEmpty() || apellidos.isEmpty() 
+                    || semestreStr.isEmpty() || carrera.isEmpty() || tipo.isEmpty() 
+                    || descripcion.isEmpty()) {
+                 JOptionPane.showMessageDialog(null, "Por favor complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+             }else{            
+                objArchivoTexto.abrirArchivo("db/alumnos.txt",'r');   
+                    
+                if(objArchivoTexto.buscarRegistro((numeroControl))){
+                     JOptionPane.showMessageDialog(this, "El alumno ya existe");
+                }else{
+                    objAlumno.setNumeroControl(Integer.parseInt(numeroControl));
 
-           
-             if(objArchivoTexto.buscarRegistro((numeroControl))){
-            JOptionPane.showMessageDialog(this, "El alumno ya existe");
-        }else{
-        objAlumno.setNumeroControl(Integer.parseInt(numeroControl));
+                    objAlumno.setNombre(nombre);
+                    objAlumno.setApellidos(apellidos);        
+                    objAlumno.setSemestre(semestre);    
+                    objAlumno.setCarrera(carrera);
+                    objAlumno.setTipo(tipo);
+                    objAlumno.setDescripcion(descripcion);
+                    //Abrir el archivo para escritura        
+                    objArchivoTexto.abrirArchivo("db/alumnos.txt",'w');
+                    /*Guardar el registro en el archivo
+                      Primero formo el registro
+                    */
+                    String registro = String.valueOf(objAlumno.getNumeroControl()) + ","+
+                                      objAlumno.getNombre()+ "," +
+                                      objAlumno.getApellidos()+ "," +
+                                      objAlumno.getSemestre()+ "," +
+                                      objAlumno.getCarrera()+ "," +
+                                      objAlumno.getTipo()+ "," +
+                                      objAlumno.getDescripcion()+"\n";
 
-        objAlumno.setNombre(nombre);
-        objAlumno.setApellidos(apellidos);        
-        objAlumno.setSemestre(semestre);    
-        objAlumno.setCarrera(carrera);
-        objAlumno.setTipo(tipo);
-        objAlumno.setDescripcion(descripcion);
-        //Abrir el archivo para escritura        
-        objArchivoTexto.abrirArchivo("db/alumnos.txt",'w');
-        /*Guardar el registro en el archivo
-          Primero formo el registro
-        */
-        String registro = String.valueOf(objAlumno.getNumeroControl()) + ","+
-                          objAlumno.getNombre()+ "," +
-                          objAlumno.getApellidos()+ "," +
-                          objAlumno.getSemestre()+ "," +
-                          objAlumno.getCarrera()+ "," +
-                          objAlumno.getTipo()+ "," +
-                          objAlumno.getDescripcion()+"\n";
-        
-        objArchivoTexto.escribirRegistro(registro);
-        //Cerrar el archivo
-        objArchivoTexto.cerrarArchivo('w');  
-        
-        //Lo subimos a la tabla        
-        String[] fila={
-        String.valueOf(objAlumno.getNumeroControl()),
-                       objAlumno.getNombre(),
-                       objAlumno.getApellidos(),
-        String.valueOf(objAlumno.getSemestre()), 
-                       objAlumno.getCarrera(),
-                       objAlumno.getTipo(),
-                       objAlumno.getDescripcion()};
-        this.dtm.addRow(fila);
+                    objArchivoTexto.escribirRegistro(registro);
+                    //Cerrar el archivo
+                    objArchivoTexto.cerrarArchivo('w');  
+
+                    //Lo subimos a la tabla        
+                    String[] fila={
+                    String.valueOf(objAlumno.getNumeroControl()),
+                                   objAlumno.getNombre(),
+                                   objAlumno.getApellidos(),
+                    String.valueOf(objAlumno.getSemestre()), 
+                                   objAlumno.getCarrera(),
+                                   objAlumno.getTipo(),
+                                   objAlumno.getDescripcion()};
+                    this.dtm.addRow(fila);
+                    
+                    limpiarCajas();
         
             JOptionPane.showMessageDialog(this, "Se ha agregado el alumno correctamente");
 

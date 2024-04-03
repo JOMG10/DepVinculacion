@@ -4,7 +4,6 @@
  */
 package DepVinculacion;
 
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -273,9 +272,7 @@ public class FAgregarAlumno extends javax.swing.JFrame {
       
         }
        
-         }
-    
-       
+         }      
        
     }
     

@@ -190,8 +190,10 @@ public class FAgregarAlumno extends javax.swing.JFrame {
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         // TODO add your handling code here:
+        //boton para guardar un nuevo registro
         guardarRegistro();
-        this.txtNumControl.requestFocus();                                    
+        this.txtNumControl.requestFocus(); 
+        
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btbCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btbCancelarMouseClicked

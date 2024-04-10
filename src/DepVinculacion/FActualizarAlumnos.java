@@ -70,6 +70,7 @@ public class FActualizarAlumnos extends javax.swing.JFrame {
 
         txtApellidos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
+        btnGuardar.setBackground(new java.awt.Color(153, 255, 255));
         btnGuardar.setText("GUARDAR");
         btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -77,6 +78,7 @@ public class FActualizarAlumnos extends javax.swing.JFrame {
             }
         });
 
+        btbCancelar.setBackground(new java.awt.Color(255, 204, 204));
         btbCancelar.setText("CANCELAR");
         btbCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -148,7 +150,7 @@ public class FActualizarAlumnos extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(229, 229, 229)
                                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(173, 173, 173)
+                                .addGap(77, 77, 77)
                                 .addComponent(btbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(68, Short.MAX_VALUE))))
         );

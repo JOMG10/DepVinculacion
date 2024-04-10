@@ -236,6 +236,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
     }
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
       int fila = this.tblAlumnos.getSelectedRow();
+      
     if (fila != -1) {
         String numIdentidadEliminar = this.tblAlumnos.getValueAt(fila, 0).toString();
         

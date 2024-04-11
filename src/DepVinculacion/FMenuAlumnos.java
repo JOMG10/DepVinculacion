@@ -215,7 +215,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         tblAlumnos.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16)); 
 
         this.columnas= new String[]{"Num.control","Nombre","Apellidos",
-                                    "Semestre","Carrera","Tipo","Descripcion"
+                                    "Semestre","Carrera","Titulacion","Descripcion", "Fecha Protocolario"
                                     };                
         this.dtm =  new DefaultTableModel(this.columnas,0);        
   
@@ -324,9 +324,10 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         String carrera = this.tblAlumnos.getValueAt(fila, 4).toString();
         String tipo = this.tblAlumnos.getValueAt(fila, 5).toString();
         String descripcion = this.tblAlumnos.getValueAt(fila, 6).toString();
+        
 
         // Obtener la fecha seleccionada del JDateChooser
-        Date fechaProtocolario = jCalendar1.getDate();
+        String fechaProtocolario = this.tblAlumnos.getValueAt(fila, 7).toString();
 
         FActualizarAlumnos objAgregarAlumno = new FActualizarAlumnos(this.dtm);
         objAgregarAlumno.setFilaSeleccionada(fila); // Asignar la fila seleccionada

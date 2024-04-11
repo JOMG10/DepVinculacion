@@ -4,6 +4,8 @@
  */
 package DepVinculacion;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -33,11 +35,14 @@ public class FAgregarAlumno extends javax.swing.JFrame {
         btbCancelar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        txtTipo = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        txtDescripcion = new javax.swing.JTextField();
-        txtSemestre = new javax.swing.JSpinner();
         txtCarrera = new javax.swing.JComboBox<>();
+        txtSemestre = new javax.swing.JComboBox<>();
+        txtTipo = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtDescripcion = new javax.swing.JTextArea();
+        jCalendar1 = new com.toedter.calendar.JCalendar();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Agregar Cliente");
@@ -60,7 +65,7 @@ public class FAgregarAlumno extends javax.swing.JFrame {
         jLabel4.setText("Apellidos");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel5.setText("Semestre");
+        jLabel5.setText("Periodo");
 
         txtApellidos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
@@ -86,17 +91,27 @@ public class FAgregarAlumno extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel7.setText("Tipo");
 
-        txtTipo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel8.setText("Descripcion");
 
-        txtDescripcion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtCarrera.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Informatica", "Tics", "Agronomia", "Forestal", "Biologia" }));
 
         txtSemestre.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtSemestre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero-Junio", "Agosto-Diciembre" }));
 
-        txtCarrera.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Informatica", "tics", "Agronomia", "Forestal", "Biologia" }));
+        txtTipo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tesis Profesional", "Libros de Texto o Prototipos", "Proyecto de Investigacion", "Diseño o Rediseño de Equipos", "Cursos Especiales de titulacion", "Examen Global por Areas de Conocimiento", "Memoria de Experiencia Profecional", "Escolaridad por Promedio", "Escolaridad por Estudios de Posgrado", "Memoria de Residencia rofesional" }));
+
+        txtDescripcion.setColumns(20);
+        txtDescripcion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtDescripcion.setLineWrap(true);
+        txtDescripcion.setRows(5);
+        txtDescripcion.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(txtDescripcion);
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel9.setText("Fecha Protocolario");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -107,11 +122,11 @@ public class FAgregarAlumno extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtNombre))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -119,67 +134,85 @@ public class FAgregarAlumno extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtNumControl, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtNumControl)))
                         .addGap(57, 57, 57)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtCarrera, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
+                                        .addComponent(jLabel5)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 109, Short.MAX_VALUE))
+                                        .addComponent(txtSemestre, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(0, 202, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel7)
+                                .addGap(33, 33, 33)
+                                .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(42, 42, 42)
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 642, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(229, 229, 229)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(248, 248, 248)
                                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(55, 55, 55)
+                                .addGap(36, 36, 36)
                                 .addComponent(btbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(68, Short.MAX_VALUE))))
+                        .addContainerGap(23, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(161, 161, 161)
+                .addComponent(jLabel9)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(30, 30, 30)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtNumControl, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addGap(42, 42, 42)
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5)
+                    .addComponent(txtSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
                     .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btbCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33))
@@ -190,8 +223,10 @@ public class FAgregarAlumno extends javax.swing.JFrame {
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         // TODO add your handling code here:
+        //boton para guardar un nuevo registro
         guardarRegistro();
-        this.txtNumControl.requestFocus();                                    
+        this.txtNumControl.requestFocus(); 
+        
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btbCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btbCancelarMouseClicked
@@ -203,15 +238,24 @@ public class FAgregarAlumno extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboBox;
 
     private void guardarRegistro(){
+        
+        // Obtener la fecha seleccionada
+    Date fechaSeleccionada = jCalendar1.getDate();
+
+    // Convertir la fecha seleccionada a un formato legible
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    String fechaProtocolario = dateFormat.format(fechaSeleccionada);
+
+    // Utiliza el valor de fechaSeleccionadaStr donde lo necesites
+
         ArchivoTexto objArchivoTexto =  new ArchivoTexto();
         Alumno objAlumno = new Alumno();
         String numeroControl = this.txtNumControl.getText();
         String nombre = this.txtNombre.getText();
         String apellidos = this.txtApellidos.getText();
-        String semestreStr = this.txtSemestre.getValue().toString();
-        int semestre = Integer.parseInt(semestreStr);
+        String semestre = (String) this.txtSemestre.getSelectedItem();
         String carrera = (String) txtCarrera.getSelectedItem();
-        String tipo = this.txtTipo.getText();
+        String tipo =  (String) this.txtTipo.getSelectedItem();
         String descripcion = this.txtDescripcion.getText();
         
         if (!numeroControl.matches("\\d+")) {
@@ -220,7 +264,7 @@ public class FAgregarAlumno extends javax.swing.JFrame {
           }else{
               
             if (numeroControl.isEmpty() || nombre.isEmpty() || apellidos.isEmpty() 
-                    || semestreStr.isEmpty() || carrera.isEmpty() || tipo.isEmpty() 
+                    || semestre.isEmpty() || carrera.isEmpty() || tipo.isEmpty() 
                     || descripcion.isEmpty()) {
                  JOptionPane.showMessageDialog(null, "Por favor complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
              }else{            
@@ -237,6 +281,7 @@ public class FAgregarAlumno extends javax.swing.JFrame {
                     objAlumno.setCarrera(carrera);
                     objAlumno.setTipo(tipo);
                     objAlumno.setDescripcion(descripcion);
+                    objAlumno.setFechaProtocolario(fechaProtocolario);
                     //Abrir el archivo para escritura        
                     objArchivoTexto.abrirArchivo("db/alumnos.txt",'w');
                     /*Guardar el registro en el archivo
@@ -247,8 +292,9 @@ public class FAgregarAlumno extends javax.swing.JFrame {
                                       objAlumno.getApellidos()+ "," +
                                       objAlumno.getSemestre()+ "," +
                                       objAlumno.getCarrera()+ "," +
-                                      objAlumno.getTipo()+ "," +
-                                      objAlumno.getDescripcion()+"\n";
+                                      objAlumno.getTipo()+ "," +                                   
+                                      objAlumno.getDescripcion()+","+
+                                      objAlumno.getFechaProtocolario()+ "\n";
 
                     objArchivoTexto.escribirRegistro(registro);
                     //Cerrar el archivo
@@ -262,7 +308,8 @@ public class FAgregarAlumno extends javax.swing.JFrame {
                     String.valueOf(objAlumno.getSemestre()), 
                                    objAlumno.getCarrera(),
                                    objAlumno.getTipo(),
-                                   objAlumno.getDescripcion()};
+                                   objAlumno.getDescripcion(), 
+                                   objAlumno.getFechaProtocolario()};
                     this.dtm.addRow(fila);
                     
                     limpiarCajas();
@@ -282,8 +329,6 @@ public class FAgregarAlumno extends javax.swing.JFrame {
         this.txtNumControl.setText("");
         this.txtNombre.setText("");
         this.txtApellidos.setText("");
-        this.txtSemestre.setValue(0);
-        this.txtTipo.setText("");
         this.txtDescripcion.setText("");
     }
       
@@ -291,6 +336,7 @@ public class FAgregarAlumno extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btbCancelar;
     private javax.swing.JButton btnGuardar;
+    private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -299,12 +345,14 @@ public class FAgregarAlumno extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JComboBox<String> txtCarrera;
-    private javax.swing.JTextField txtDescripcion;
+    private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNumControl;
-    private javax.swing.JSpinner txtSemestre;
-    private javax.swing.JTextField txtTipo;
+    private javax.swing.JComboBox<String> txtSemestre;
+    private javax.swing.JComboBox<String> txtTipo;
     // End of variables declaration//GEN-END:variables
 }

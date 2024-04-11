@@ -4,9 +4,10 @@
  */
 package DepVinculacion;
 
-import java.awt.Color;
+import com.toedter.calendar.JCalendar;
 import java.util.ArrayList;
 import java.awt.Font;
+import java.util.Date;
 
 import java.util.Iterator;
 import javax.swing.JOptionPane;
@@ -74,19 +75,19 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         tblAlumnos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         tblAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Num. Control", "Nombre", "Apellidos", "Semestre", "Carrera", "Tipo", "Descipcion"
+                "Num. Control", "Nombre", "Apellidos", "Periodo", "Carrera", "Titulacion", "Descipcion", "Fecha de acto protocolario"
             }
         ));
         tblAlumnos.setMaximumSize(new java.awt.Dimension(2147483647, 500));
@@ -214,7 +215,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         tblAlumnos.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16)); 
 
         this.columnas= new String[]{"Num.control","Nombre","Apellidos",
-                                    "Semestre","Carrera","Tipo","Descripcion"
+                                    "Semestre","Carrera","Titulacion","Descripcion", "Fecha Protocolario"
                                     };                
         this.dtm =  new DefaultTableModel(this.columnas,0);        
   
@@ -307,25 +308,32 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         this.txtBuscarAlumno.setText("");
   
     }
+       
+       
+               private JCalendar jCalendar1;
+
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
      
+
        int fila = this.tblAlumnos.getSelectedRow();
     if (fila != -1) {
         String numControl = this.tblAlumnos.getValueAt(fila, 0).toString();
         String nombre = this.tblAlumnos.getValueAt(fila, 1).toString();
         String apellido = this.tblAlumnos.getValueAt(fila, 2).toString();
-        String semestres = this.tblAlumnos.getValueAt(fila, 3).toString();
-        int semestre = Integer.parseInt(semestres);
+        String semestre = this.tblAlumnos.getValueAt(fila, 3).toString();
         String carrera = this.tblAlumnos.getValueAt(fila, 4).toString();
         String tipo = this.tblAlumnos.getValueAt(fila, 5).toString();
         String descripcion = this.tblAlumnos.getValueAt(fila, 6).toString();
-
         
+
+        // Obtener la fecha seleccionada del JDateChooser
+        String fechaProtocolario = this.tblAlumnos.getValueAt(fila, 7).toString();
+
         FActualizarAlumnos objAgregarAlumno = new FActualizarAlumnos(this.dtm);
         objAgregarAlumno.setFilaSeleccionada(fila); // Asignar la fila seleccionada
-        objAgregarAlumno.EditForm(numControl, nombre, apellido, semestre, carrera, tipo, descripcion);
+        objAgregarAlumno.EditForm(numControl, nombre, apellido, semestre, carrera, tipo, descripcion, fechaProtocolario);
         objAgregarAlumno.setVisible(true);
-    }else{
+    } else {
         JOptionPane.showMessageDialog(this, "Selecciona una fila");
     }
     }//GEN-LAST:event_btnEditarMouseClicked

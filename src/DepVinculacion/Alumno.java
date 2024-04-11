@@ -19,6 +19,14 @@ public class Alumno {
     String descripcion;
     String fechaProtocolario;
 
+    public String getFechaProtocolario() {
+        return fechaProtocolario;
+    }
+
+    public void setFechaProtocolario(String fechaProtocolario) {
+        this.fechaProtocolario = fechaProtocolario;
+    }
+
 
     public int getNumeroControl() {
         return numeroControl;

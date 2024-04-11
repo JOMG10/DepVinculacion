@@ -1,3 +1,2 @@
-2020,Genaro,ewfew,8,Informatica,fewf,ewfewf
-6546545,Jose martinez ,few,3,Biologia,ewfewf,ewfwef
-564,dwqd,dwq,0,Informatica,dqwd,wqdwq
+20920129,Genaro,Jose,Enero-Junio,Informatica,Cursos Especiales de titulacion,este es un comentaroio de ejemplo para probar ,11/09/2020
+209201290,Jiose,Martinez  ,Enero-Junio,Informatica,Tesis Profesional,jkabdasdsasadsasadas d asd affewf ewf ew few fewf ewf ewf ewf ew ew ew ew ewf ewf ewf ewf ewf ewfew ewf ew fewf ewf ewf wef we,12/04/2024

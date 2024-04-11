@@ -290,14 +290,14 @@
           <StringArray count="10">
             <StringItem index="0" value="Tesis Profesional"/>
             <StringItem index="1" value="Libros de Texto o Prototipos"/>
-            <StringItem index="2" value="Proyecto de Investigacion"/>
+            <StringItem index="2" value="Proyecto de Investigaci&#xf3;n"/>
             <StringItem index="3" value="Dise&#xf1;o o Redise&#xf1;o de Equipos"/>
-            <StringItem index="4" value="Cursos Especiales de titulacion"/>
-            <StringItem index="5" value="Examen Global por Areas de Conocimiento"/>
-            <StringItem index="6" value="Memoria de Experiencia Profecional"/>
+            <StringItem index="4" value="Cursos Especiales de Titulaci&#xf3;n"/>
+            <StringItem index="5" value="Ex&#xe1;men Global por &#xc1;reas de Conocimiento"/>
+            <StringItem index="6" value="Memoria de Experiencia Profesional"/>
             <StringItem index="7" value="Escolaridad por Promedio"/>
             <StringItem index="8" value="Escolaridad por Estudios de Posgrado"/>
-            <StringItem index="9" value="Memoria de Residencia rofesional"/>
+            <StringItem index="9" value="Memoria de Residencia Profesional"/>
           </StringArray>
         </Property>
       </Properties>

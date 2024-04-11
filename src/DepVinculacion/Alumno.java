@@ -13,10 +13,11 @@ public class Alumno {
     int numeroControl;
     String nombre;
     String apellidos;
-    int semestre;
+    String semestre;
     String carrera;
     String tipo;
     String descripcion;
+    String fechaProtocolario;
 
 
     public int getNumeroControl() {
@@ -43,11 +44,11 @@ public class Alumno {
         this.apellidos = apellidos;
     }
 
-    public int getSemestre() {
+    public String getSemestre() {
         return semestre;
     }
 
-    public void setSemestre(int semestre) {
+    public void setSemestre(String semestre) {
         this.semestre = semestre;
     }
 

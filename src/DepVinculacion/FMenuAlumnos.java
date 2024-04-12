@@ -17,6 +17,8 @@ public class FMenuAlumnos extends javax.swing.JFrame {
     
     String[] columnas;
     DefaultTableModel dtm;
+        private JCalendar jCalendar1;
+
 
     public FMenuAlumnos() {
         initComponents();        
@@ -295,8 +297,6 @@ public class FMenuAlumnos extends javax.swing.JFrame {
             }
             limpiarCajas();
         }        
-
-        // Si no se encontró el número de control, mostrar un mensaje de error
         if (!encontrado) {
             JOptionPane.showMessageDialog(null, "No se encontró el alumno con el número de control especificado.", "Error", JOptionPane.ERROR_MESSAGE);
         }        
@@ -305,12 +305,11 @@ public class FMenuAlumnos extends javax.swing.JFrame {
 
     
        private void limpiarCajas(){
-        this.txtBuscarAlumno.setText("");
-  
+        this.txtBuscarAlumno.setText("");  
     }
        
        
-               private JCalendar jCalendar1;
+               
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
      

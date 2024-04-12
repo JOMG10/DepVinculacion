@@ -101,7 +101,7 @@ public class FAgregarAlumno extends javax.swing.JFrame {
         txtSemestre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero-Junio", "Agosto-Diciembre" }));
 
         txtTipo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tesis Profesional", "Libros de Texto o Prototipos", "Proyecto de Investigacion", "Diseño o Rediseño de Equipos", "Cursos Especiales de titulacion", "Examen Global por Areas de Conocimiento", "Memoria de Experiencia Profecional", "Escolaridad por Promedio", "Escolaridad por Estudios de Posgrado", "Memoria de Residencia rofesional" }));
+        txtTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tesis Profesional", "Libros de Texto o Prototipos", "Proyecto de Investigación", "Diseño o Rediseño de Equipos", "Cursos Especiales de Titulación", "Exámen Global por Áreas de Conocimiento", "Memoria de Experiencia Profesional", "Escolaridad por Promedio", "Escolaridad por Estudios de Posgrado", "Memoria de Residencia Profesional" }));
 
         txtDescripcion.setColumns(20);
         txtDescripcion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N

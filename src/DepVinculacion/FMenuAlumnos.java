@@ -3,13 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package DepVinculacion;
-
-import com.toedter.calendar.JCalendar;
-import java.awt.Dimension;
 import java.util.ArrayList;
 import java.awt.Font;
-import java.awt.Toolkit;
-
 import java.util.Iterator;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;

@@ -3,12 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package DepVinculacion;
-
-import com.toedter.calendar.JCalendar;
 import java.util.ArrayList;
 import java.awt.Font;
-import java.util.Date;
-
 import java.util.Iterator;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -17,7 +13,6 @@ public class FMenuAlumnos extends javax.swing.JFrame {
     
     String[] columnas;
     DefaultTableModel dtm;
-        private JCalendar jCalendar1;
 
 
     public FMenuAlumnos() {
@@ -376,9 +371,10 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FMenuAlumnos().setVisible(true);
-            }
-        });
+            FMenuAlumnos objAlumnos = new FMenuAlumnos();            
+            objAlumnos.setVisible(true);
+        }
+    });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

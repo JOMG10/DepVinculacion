@@ -32,63 +32,59 @@ public class NewJFrame extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
+    
+    /**
+     * Creates new form NewJFrame
+     */
     public NewJFrame() {
+        initComponents(); // Inicializa los componentes primero
         
-        // Otros componentes y configuraciones de la interfaz de usuario
-     initComponents();
-     llenarTabla();
-
-   
-   
-    }
-    
-    
-    private void llenarTabla(){
-         // Leer archivo Excel y cargar datos en la tabla
-    cargarDatosDesdeExcel("alumnos.xlsx");
+        // Ahora inicializa el modelo de la tabla
+        DefaultTableModel modelo = (DefaultTableModel) table.getModel();
         
+        // Llena la tabla con los datos del archivo Excel
+        cargarDatosDesdeExcel("alumnos.xlsx");
     }
-    
     
     private void cargarDatosDesdeExcel(String nombreArchivo) {
-     DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) table.getModel();
 
-    try (InputStream archivo = new FileInputStream(nombreArchivo);
-         XSSFWorkbook libro = new XSSFWorkbook(archivo)) {
+        try (InputStream archivo = new FileInputStream(nombreArchivo);
+             XSSFWorkbook libro = new XSSFWorkbook(archivo)) {
 
-        XSSFSheet hoja = libro.getSheetAt(0);
-        Iterator<Row> filaIterator = hoja.iterator();
+            XSSFSheet hoja = libro.getSheetAt(0);
+            Iterator<Row> filaIterator = hoja.iterator();
 
-        while (filaIterator.hasNext()) {
-            Row fila = filaIterator.next();
-            Iterator<Cell> celdaIterator = fila.iterator();
+            while (filaIterator.hasNext()) {
+                Row fila = filaIterator.next();
+                Iterator<Cell> celdaIterator = fila.iterator();
 
-            String nombre = "";
-            String apellido = "";
-            int edad = 0;
+                String nombre = "";
+                String apellido = "";
+                int edad = 0;
 
-            while (celdaIterator.hasNext()) {
-                Cell celda = celdaIterator.next();
-                int indiceColumna = celda.getColumnIndex();
+                while (celdaIterator.hasNext()) {
+                    Cell celda = celdaIterator.next();
+                    int indiceColumna = celda.getColumnIndex();
 
-                switch (indiceColumna) {
-                    case 0:
-                        nombre = celda.getStringCellValue();
-                        break;
-                    case 1:
-                        apellido = celda.getStringCellValue();
-                        break;
-                    case 2:
-                        edad = (int) celda.getNumericCellValue();
-                        break;
+                    switch (indiceColumna) {
+                        case 0:
+                            nombre = celda.getStringCellValue();
+                            break;
+                        case 1:
+                            apellido = celda.getStringCellValue();
+                            break;
+                        case 2:
+                            edad = (int) celda.getNumericCellValue();
+                            break;
+                    }
                 }
-            }
 
-            modelo.addRow(new Object[]{nombre, apellido, edad});
+                modelo.addRow(new Object[]{nombre, apellido, edad});
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
     }
 
     /**
@@ -101,39 +97,39 @@ public class NewJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Nombre", "Apellido", "Edad"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(table);
+        jScrollPane2.setViewportView(table);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(105, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -176,7 +172,7 @@ public class NewJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

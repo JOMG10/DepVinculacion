@@ -35,63 +35,59 @@ public class NewJFrame extends javax.swing.JFrame {
      */
     public NewJFrame() {
         
-        super("Datos de alumnos");
-        setSize(600, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       super("Datos de alumnos");
+    setSize(600, 400);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Crear tabla
-        tabla = new JTable();
-        JScrollPane scrollPane = new JScrollPane(tabla);
-        add(scrollPane);
+    // Inicializa la tabla existente
+    table = new javax.swing.JTable();
 
-        // Leer archivo Excel y cargar datos en la tabla
-        cargarDatosDesdeExcel("alumnos.xlsx");
+    // Otros componentes y configuraciones de la interfaz de usuario
+    initComponents();
+
+    // Leer archivo Excel y cargar datos en la tabla
+    cargarDatosDesdeExcel("alumnos.xlsx");
     }
 
     private void cargarDatosDesdeExcel(String nombreArchivo) {
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Nombre");
-        modelo.addColumn("Apellido");
-        modelo.addColumn("Edad");
+     DefaultTableModel modelo = (DefaultTableModel) table.getModel();
 
-        try (InputStream archivo = new FileInputStream(nombreArchivo);
-             XSSFWorkbook libro = new XSSFWorkbook(archivo)) {
+    try (InputStream archivo = new FileInputStream(nombreArchivo);
+         XSSFWorkbook libro = new XSSFWorkbook(archivo)) {
 
-            XSSFSheet hoja = libro.getSheetAt(0);
-            Iterator<Row> filaIterator = hoja.iterator();
+        XSSFSheet hoja = libro.getSheetAt(0);
+        Iterator<Row> filaIterator = hoja.iterator();
 
-            while (filaIterator.hasNext()) {
-                Row fila = filaIterator.next();
-                Iterator<Cell> celdaIterator = fila.iterator();
+        while (filaIterator.hasNext()) {
+            Row fila = filaIterator.next();
+            Iterator<Cell> celdaIterator = fila.iterator();
 
-                String nombre = "";
-                String apellido = "";
-                int edad = 0;
+            String nombre = "";
+            String apellido = "";
+            int edad = 0;
 
-                while (celdaIterator.hasNext()) {
-                    Cell celda = celdaIterator.next();
-                    int indiceColumna = celda.getColumnIndex();
+            while (celdaIterator.hasNext()) {
+                Cell celda = celdaIterator.next();
+                int indiceColumna = celda.getColumnIndex();
 
-                    switch (indiceColumna) {
-                        case 0:
-                            nombre = celda.getStringCellValue();
-                            break;
-                        case 1:
-                            apellido = celda.getStringCellValue();
-                            break;
-                        case 2:
-                            edad = (int) celda.getNumericCellValue();
-                            break;
-                    }
+                switch (indiceColumna) {
+                    case 0:
+                        nombre = celda.getStringCellValue();
+                        break;
+                    case 1:
+                        apellido = celda.getStringCellValue();
+                        break;
+                    case 2:
+                        edad = (int) celda.getNumericCellValue();
+                        break;
                 }
-
-                modelo.addRow(new Object[]{nombre, apellido, edad});
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        tabla.setModel(modelo);
+            modelo.addRow(new Object[]{nombre, apellido, edad});
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
     }
 
     /**
@@ -110,13 +106,13 @@ public class NewJFrame extends javax.swing.JFrame {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nombre", "Apellido", "Edad"
             }
         ));
         jScrollPane1.setViewportView(table);

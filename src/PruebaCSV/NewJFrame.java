@@ -34,20 +34,21 @@ public class NewJFrame extends javax.swing.JFrame {
      */
     public NewJFrame() {
         
-       super("Datos de alumnos");
-    setSize(600, 400);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    // Inicializa la tabla existente
-    table = new javax.swing.JTable();
-
-    // Otros componentes y configuraciones de la interfaz de usuario
+        // Otros componentes y configuraciones de la interfaz de usuario
      initComponents();
+     llenarTabla();
 
-    // Leer archivo Excel y cargar datos en la tabla
-    cargarDatosDesdeExcel("alumnos.xlsx");
+   
    
     }
+    
+    
+    private void llenarTabla(){
+         // Leer archivo Excel y cargar datos en la tabla
+    cargarDatosDesdeExcel("alumnos.xlsx");
+        
+    }
+    
     
     private void cargarDatosDesdeExcel(String nombreArchivo) {
      DefaultTableModel modelo = (DefaultTableModel) table.getModel();

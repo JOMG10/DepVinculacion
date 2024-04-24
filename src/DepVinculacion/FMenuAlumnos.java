@@ -226,6 +226,10 @@ public final class FMenuAlumnos extends javax.swing.JFrame {
 
             XSSFSheet hoja = libro.getSheetAt(0);
             Iterator<Row> filaIterator = hoja.iterator();
+            
+             if (filaIterator.hasNext()) {
+        filaIterator.next(); // Ignorar la primera fila
+    }
 
             while (filaIterator.hasNext()) {
                 Row fila = filaIterator.next();

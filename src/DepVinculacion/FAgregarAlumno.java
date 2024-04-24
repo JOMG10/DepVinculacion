@@ -9,9 +9,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -231,13 +231,10 @@ public class FAgregarAlumno extends javax.swing.JFrame {
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         // TODO add your handling code here:
-        /*
-            JTable tblAlumnos = dtm.tblAlumnos;
-            
-                DefaultTableModel modelo = (DefaultTableModel) tblAlumnos.getModel();
+        
+      
 
 
-*/
 
         //boton para guardar un nuevo registro
         this.txtNumControl.requestFocus(); 
@@ -257,12 +254,15 @@ public class FAgregarAlumno extends javax.swing.JFrame {
         String nombre = this.txtNombre.getText();
         String apellidos = this.txtApellidos.getText();
         String semestre = (String) this.txtSemestre.getSelectedItem();
-        String carrera = (String) txtCarrera.getSelectedItem();
+        String carrera = (String) this.txtCarrera.getSelectedItem();
         String tipo =  (String) this.txtTipo.getSelectedItem();
         String descripcion = this.txtDescripcion.getText();
     
+                 
+        DefaultTableModel modelo = dtm;
+
     modelo.addRow(new Object[]{numeroControl, nombre, apellidos, semestre, carrera, tipo, descripcion});
-    guardarRegistro(numeroControl, nombre, apellidos, semestre, carrera, tipo, descripcion, "alumnos.xlsx");
+    guardarRegistro(numeroControl, nombre, apellidos, semestre, carrera, tipo, descripcion,fechaProtocolario, "alumnos.xlsx");
         
         
     }//GEN-LAST:event_btnGuardarMouseClicked
@@ -275,10 +275,11 @@ public class FAgregarAlumno extends javax.swing.JFrame {
 
     private javax.swing.JComboBox<String> comboBox;
 
-    private void guardarRegistro(String numeroControl,String nombre, String apellidos,String semestre,String carrera,String tipo,String descripcion,String nombreArchivo){
+    private void guardarRegistro(String numeroControl,String nombre, String apellidos,String semestre,String carrera,String tipo,String descripcion,String fechaProtocolario,String nombreArchivo){
 
       
-        
+                Alumno objAlumno = new Alumno();
+
         if (!numeroControl.matches("\\d+")) {
         JOptionPane.showMessageDialog(null, "El número de control debe contener solo números.", "Error", JOptionPane.ERROR_MESSAGE);
         return; // Salir del método si el número de control no es válido
@@ -291,32 +292,51 @@ public class FAgregarAlumno extends javax.swing.JFrame {
              }else{   
                 
                 
-                
-                    try (InputStream archivo = new FileInputStream(nombreArchivo);
-         XSSFWorkbook libro = new XSSFWorkbook(archivo)) {
 
-        XSSFSheet hoja = libro.getSheetAt(0);
-        int ultimaFila = hoja.getLastRowNum() + 1; // Obtener la última fila y sumar 1 para agregar la nueva fila
+            try (InputStream archivo = new FileInputStream(nombreArchivo);
+           XSSFWorkbook libro = new XSSFWorkbook(archivo)) {
 
-        // Crear la nueva fila y agregar los datos
-        Row fila = hoja.createRow(ultimaFila);
-        fila.createCell(0).setCellValue(numeroControl);
-        fila.createCell(1).setCellValue(nombre);
-        fila.createCell(2).setCellValue(apellidos);
-        fila.createCell(3).setCellValue(semestre);
-        fila.createCell(4).setCellValue(carrera);
-        fila.createCell(5).setCellValue(tipo);
-        fila.createCell(6).setCellValue(descripcion);
+          XSSFSheet hoja = libro.getSheetAt(0);
+          int ultimaFila = hoja.getLastRowNum() + 1; // Obtener la última fila y sumar 1 para agregar la nueva fila
 
-        // Guardar los cambios en el archivo Excel
-        try (FileOutputStream fileOut = new FileOutputStream(nombreArchivo)) {
-            libro.write(fileOut);
-        }
+          // Crear la nueva fila y agregar los datos
+          Row nuevaFila = hoja.createRow(ultimaFila);
+          nuevaFila.createCell(0).setCellValue(numeroControl);
+          nuevaFila.createCell(1).setCellValue(nombre);
+          nuevaFila.createCell(2).setCellValue(apellidos);
+          nuevaFila.createCell(3).setCellValue(semestre);
+          nuevaFila.createCell(4).setCellValue(carrera);
+          nuevaFila.createCell(5).setCellValue(tipo);
+          nuevaFila.createCell(6).setCellValue(descripcion);
+          nuevaFila.createCell(7).setCellValue(fechaProtocolario);
+          
+           String[] fila={
+                    String.valueOf(numeroControl),
+                                   nombre,
+                                   apellidos,
+                    String.valueOf(semestre), 
+                                   carrera,
+                                   tipo,
+                                   descripcion, 
+                                   fechaProtocolario};
+                    this.dtm.addRow(fila);
+        
+        System.out.println(Arrays.toString(fila));
 
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-                    
+
+        limpiarCajas();
+
+JOptionPane.showMessageDialog(this, "Se ha agregado el alumno correctamente");
+
+          // Guardar los cambios en el archivo Excel
+          try (FileOutputStream fileOut = new FileOutputStream(nombreArchivo)) {
+              libro.write(fileOut);
+          }
+
+      } catch (IOException e) {
+          e.printStackTrace();
+      }
+
                     
                     
                     

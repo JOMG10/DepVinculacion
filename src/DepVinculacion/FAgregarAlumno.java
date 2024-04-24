@@ -250,7 +250,7 @@ public class FAgregarAlumno extends javax.swing.JFrame {
         
     if(dato){
         limpiarCajas();
-        modelo.addRow(new Object[]{numeroControl, nombre, apellidos, semestre, carrera, tipo, descripcion});        
+        modelo.addRow(new Object[]{numeroControl, nombre, apellidos, semestre, carrera, tipo, descripcion, fechaProtocolario});        
     }
         
     }//GEN-LAST:event_btnGuardarMouseClicked

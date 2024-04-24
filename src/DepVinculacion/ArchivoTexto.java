@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -34,8 +35,7 @@ public class ArchivoTexto {
     private FileReader fReader;
     private BufferedWriter escribir;
     private BufferedReader leer;
-DefaultTableModel dtm = new DefaultTableModel();
-    private FMenuAlumnos fmenuAlumnos;
+    DefaultTableModel dtm;
 
 
         
@@ -45,9 +45,8 @@ DefaultTableModel dtm = new DefaultTableModel();
         this.escribir = null;
         this.leer = null;        
         this.archivo = null;
-        this.fmenuAlumnos = fmenuAlumnos;
-    }
-    
+        this.dtm = dtm;
+    }    
     protected boolean existeArchivo(String nombreArchivo) {    
         return new File(nombreArchivo).exists();
     }
@@ -241,9 +240,9 @@ DefaultTableModel dtm = new DefaultTableModel();
     }     
         return false;
   }
+
     
-
-
+    
     
     
 }

@@ -178,6 +178,16 @@ public class NewJFrame extends javax.swing.JFrame {
         fila.createCell(1).setCellValue(apellido);
         fila.createCell(2).setCellValue(edad);
 
+        
+        
+           String[] filas={
+                   
+                          nombre,
+                          apellido,
+                String.valueOf(edad),
+                
+           };
+                   
         // Guardar los cambios en el archivo Excel
         try (FileOutputStream fileOut = new FileOutputStream(nombreArchivo)) {
             libro.write(fileOut);

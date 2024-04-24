@@ -201,8 +201,8 @@ public class FMenuAlumnos extends javax.swing.JFrame {
                     .addComponent(btnAgregarNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
+                .addGap(87, 87, 87)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
                 .addGap(39, 39, 39))
         );
 
@@ -238,6 +238,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
                 String carrera = "";
                 String tipo ="";
                 String descripcion="";
+                String fechaProtocolario="";
 
                 while (celdaIterator.hasNext()) {
                     Cell celda = celdaIterator.next();
@@ -265,10 +266,13 @@ public class FMenuAlumnos extends javax.swing.JFrame {
                         case 6:
                             descripcion = celda.getStringCellValue();
                             break;
+                        case 7:
+                            fechaProtocolario = celda.getStringCellValue();
+                            break;
                     }
                 }
 
-                modelo.addRow(new Object[]{numeroControl, nombre, apellido, semestre, carrera, tipo, descripcion});
+                modelo.addRow(new Object[]{numeroControl, nombre, apellido, semestre, carrera, tipo, descripcion, fechaProtocolario});
             }
         } catch (IOException e) {
             e.printStackTrace();

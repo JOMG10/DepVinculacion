@@ -201,7 +201,8 @@ DefaultTableModel dtm = new DefaultTableModel();
             }else{                  
                 
                 if(objFMenuAlumnos.buscarPorNumeroControl(numeroControl)){
-                   JOptionPane.showMessageDialog(null, "el alumno ya existe");               
+                   JOptionPane.showMessageDialog(null, "el alumno ya existe");  
+                   return false;
                 }else{
                     
                     try (InputStream archivo = new FileInputStream("alumnos.xlsx");
@@ -219,27 +220,10 @@ DefaultTableModel dtm = new DefaultTableModel();
                     nuevaFila.createCell(4).setCellValue(carrera);
                     nuevaFila.createCell(5).setCellValue(tipo);
                     nuevaFila.createCell(6).setCellValue(descripcion);
-                    nuevaFila.createCell(7).setCellValue(fechaProtocolario);
-
-                   if (dtm != null) {
-                        String[] filas = {
-                            String.valueOf(numeroControl),
-                            nombre,
-                            apellidos,
-                            String.valueOf(semestre),
-                            carrera,
-                            tipo,
-                            descripcion,
-                            fechaProtocolario
-                        };
-                       
-                        
-                        JOptionPane.showMessageDialog(null, "Se ha agregado el alumno correctamente");
-                    } else {
-                        // Maneja el caso donde dtm es null, tal vez lanzando un mensaje de error o inicializando dtm adecuadamente.
-                        JOptionPane.showMessageDialog(null, "Error: El modelo de tabla no está inicializado correctamente");
-                    }
-
+                    nuevaFila.createCell(7).setCellValue(fechaProtocolario);          
+                                            
+                    JOptionPane.showMessageDialog(null, "Se ha agregado el alumno correctamente");
+                   
           // Guardar los cambios en el archivo Excel
                 try (FileOutputStream fileOut = new FileOutputStream("alumnos.xlsx")) {
                     libro.write(fileOut);
@@ -257,6 +241,7 @@ DefaultTableModel dtm = new DefaultTableModel();
     }     
         return false;
   }
+    
 
 
     

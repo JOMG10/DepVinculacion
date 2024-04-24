@@ -209,7 +209,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    private void llenarTabla(){
+    public void llenarTabla(){
         DefaultTableModel modelo = (DefaultTableModel) tblAlumnos.getModel();        
       
         tblAlumnos.setRowHeight(30);
@@ -228,11 +228,16 @@ public class FMenuAlumnos extends javax.swing.JFrame {
 
             while (filaIterator.hasNext()) {
                 Row fila = filaIterator.next();
-                Iterator<Cell> celdaIterator = fila.iterator();
-
+                Iterator<Cell> celdaIterator = fila.iterator();             
+                
+         
+         String numeroControl = "";
                 String nombre = "";
                 String apellido = "";
-                int edad = 0;
+                String semestre = "";
+                String carrera = "";
+                String tipo ="";
+                String descripcion="";
 
                 while (celdaIterator.hasNext()) {
                     Cell celda = celdaIterator.next();
@@ -240,18 +245,30 @@ public class FMenuAlumnos extends javax.swing.JFrame {
 
                     switch (indiceColumna) {
                         case 0:
-                            nombre = celda.getStringCellValue();
+                            numeroControl = celda.getStringCellValue();
                             break;
                         case 1:
-                            apellido = celda.getStringCellValue();
+                            nombre = celda.getStringCellValue();
                             break;
                         case 2:
-                            edad = (int) celda.getNumericCellValue();
+                            apellido = celda.getStringCellValue();
+                            break;
+                         case 3:
+                            semestre = celda.getStringCellValue();
+                            break;
+                        case 4:
+                            carrera = celda.getStringCellValue();
+                            break;
+                        case 5:
+                            tipo = celda.getStringCellValue();
+                            break;
+                        case 6:
+                            descripcion = celda.getStringCellValue();
                             break;
                     }
                 }
 
-                modelo.addRow(new Object[]{nombre, apellido, edad});
+                modelo.addRow(new Object[]{numeroControl, nombre, apellido, semestre, carrera, tipo, descripcion});
             }
         } catch (IOException e) {
             e.printStackTrace();

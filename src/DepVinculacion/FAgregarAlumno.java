@@ -260,9 +260,6 @@ public class FAgregarAlumno extends javax.swing.JFrame {
                         dispose();
 
     }//GEN-LAST:event_btbCancelarMouseClicked
-
-    private javax.swing.JComboBox<String> comboBox;
-
     
     private void limpiarCajas(){
         this.txtNumControl.setText("");

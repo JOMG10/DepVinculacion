@@ -4,10 +4,18 @@
  */
 package DepVinculacion;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 public class FAgregarAlumno extends javax.swing.JFrame {
@@ -223,22 +231,15 @@ public class FAgregarAlumno extends javax.swing.JFrame {
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         // TODO add your handling code here:
+            JTable tblAlumnos = dtm.tblAlumnos;
+            
+                DefaultTableModel modelo = (DefaultTableModel) tblAlumnos.getModel();
+
+
+
         //boton para guardar un nuevo registro
-        guardarRegistro();
         this.txtNumControl.requestFocus(); 
-        
-    }//GEN-LAST:event_btnGuardarMouseClicked
-
-    private void btbCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btbCancelarMouseClicked
-        // TODO add your handling code here:
-                        dispose();
-
-    }//GEN-LAST:event_btbCancelarMouseClicked
-
-    private javax.swing.JComboBox<String> comboBox;
-
-    private void guardarRegistro(){
-        
+  
         // Obtener la fecha seleccionada
     Date fechaSeleccionada = jCalendar1.getDate();
 
@@ -257,6 +258,24 @@ public class FAgregarAlumno extends javax.swing.JFrame {
         String carrera = (String) txtCarrera.getSelectedItem();
         String tipo =  (String) this.txtTipo.getSelectedItem();
         String descripcion = this.txtDescripcion.getText();
+    
+    modelo.addRow(new Object[]{numeroControl, nombre, apellidos, semestre, carrera, tipo, descripcion});
+    guardarRegistro(numeroControl, nombre, apellidos, semestre, carrera, tipo, descripcion, "alumnos.xlsx");
+        
+        
+    }//GEN-LAST:event_btnGuardarMouseClicked
+
+    private void btbCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btbCancelarMouseClicked
+        // TODO add your handling code here:
+                        dispose();
+
+    }//GEN-LAST:event_btbCancelarMouseClicked
+
+    private javax.swing.JComboBox<String> comboBox;
+
+    private void guardarRegistro(String numeroControl,String nombre, String apellidos,String semestre,String carrera,String tipo,String descripcion,String nombreArchivo){
+
+      
         
         if (!numeroControl.matches("\\d+")) {
         JOptionPane.showMessageDialog(null, "El número de control debe contener solo números.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -267,56 +286,38 @@ public class FAgregarAlumno extends javax.swing.JFrame {
                     || semestre.isEmpty() || carrera.isEmpty() || tipo.isEmpty() 
                     || descripcion.isEmpty()) {
                  JOptionPane.showMessageDialog(null, "Por favor complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-             }else{            
-                objArchivoTexto.abrirArchivo("db/alumnos.txt",'r');   
-                    
-                if(objArchivoTexto.buscarRegistro((numeroControl))){
-                     JOptionPane.showMessageDialog(this, "El alumno ya existe");
-                }else{
-                    objAlumno.setNumeroControl(Integer.parseInt(numeroControl));
+             }else{   
+                
+                
+                
+                    try (InputStream archivo = new FileInputStream(nombreArchivo);
+         XSSFWorkbook libro = new XSSFWorkbook(archivo)) {
 
-                    objAlumno.setNombre(nombre);
-                    objAlumno.setApellidos(apellidos);        
-                    objAlumno.setSemestre(semestre);    
-                    objAlumno.setCarrera(carrera);
-                    objAlumno.setTipo(tipo);
-                    objAlumno.setDescripcion(descripcion);
-                    objAlumno.setFechaProtocolario(fechaProtocolario);
-                    //Abrir el archivo para escritura        
-                    objArchivoTexto.abrirArchivo("db/alumnos.txt",'w');
-                    /*Guardar el registro en el archivo
-                      Primero formo el registro
-                    */
-                    String registro = String.valueOf(objAlumno.getNumeroControl()) + ","+
-                                      objAlumno.getNombre()+ "," +
-                                      objAlumno.getApellidos()+ "," +
-                                      objAlumno.getSemestre()+ "," +
-                                      objAlumno.getCarrera()+ "," +
-                                      objAlumno.getTipo()+ "," +                                   
-                                      objAlumno.getDescripcion()+","+
-                                      objAlumno.getFechaProtocolario()+ "\n";
+        XSSFSheet hoja = libro.getSheetAt(0);
+        int ultimaFila = hoja.getLastRowNum() + 1; // Obtener la última fila y sumar 1 para agregar la nueva fila
 
-                    objArchivoTexto.escribirRegistro(registro);
-                    //Cerrar el archivo
-                    objArchivoTexto.cerrarArchivo('w');  
+        // Crear la nueva fila y agregar los datos
+        Row fila = hoja.createRow(ultimaFila);
+        fila.createCell(0).setCellValue(numeroControl);
+        fila.createCell(1).setCellValue(nombre);
+        fila.createCell(2).setCellValue(apellidos);
+        fila.createCell(3).setCellValue(semestre);
+        fila.createCell(4).setCellValue(carrera);
+        fila.createCell(5).setCellValue(tipo);
+        fila.createCell(6).setCellValue(descripcion);
 
-                    //Lo subimos a la tabla        
-                    String[] fila={
-                    String.valueOf(objAlumno.getNumeroControl()),
-                                   objAlumno.getNombre(),
-                                   objAlumno.getApellidos(),
-                    String.valueOf(objAlumno.getSemestre()), 
-                                   objAlumno.getCarrera(),
-                                   objAlumno.getTipo(),
-                                   objAlumno.getDescripcion(), 
-                                   objAlumno.getFechaProtocolario()};
-                    this.dtm.addRow(fila);
-                    
-                    limpiarCajas();
-        
-            JOptionPane.showMessageDialog(this, "Se ha agregado el alumno correctamente");
-
+        // Guardar los cambios en el archivo Excel
+        try (FileOutputStream fileOut = new FileOutputStream(nombreArchivo)) {
+            libro.write(fileOut);
         }
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+                    
+                    
+                    
+                    
       
         }
        

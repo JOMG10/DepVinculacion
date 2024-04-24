@@ -381,6 +381,8 @@ public final class FMenuAlumnos extends javax.swing.JFrame {
 
         FActualizarAlumnos objAgregarAlumno = new FActualizarAlumnos(this.dtm);
         objAgregarAlumno.setFilaSeleccionada(fila); // Asignar la fila seleccionada
+            System.out.print(fila);
+
         objAgregarAlumno.EditForm(numControl, nombre, apellido, semestre, carrera, tipo, descripcion, fechaProtocolario);
         objAgregarAlumno.setVisible(true);
     } else {

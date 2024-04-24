@@ -4,11 +4,18 @@
  */
 package DepVinculacion;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 public class FActualizarAlumnos extends javax.swing.JFrame {
@@ -292,19 +299,43 @@ public class FActualizarAlumnos extends javax.swing.JFrame {
         dtm.setValueAt(fechaProtocolario, filaSeleccionada, 7);
         
              
-        ArchivoTexto objArchivoTexto= new ArchivoTexto ();               
-        ArrayList<String> filas;        
+     try {
+    FileInputStream file = new FileInputStream(new File("alumnos.xlsx"));
+    XSSFWorkbook workbook = new XSSFWorkbook(file);
+    XSSFSheet sheet = workbook.getSheetAt(0);
+    
 
-        objArchivoTexto.abrirArchivo("db/alumnos.txt",'r');            
-        
-        filas = objArchivoTexto.leerLineas();    
+    Row row = sheet.getRow(filaSeleccionada+1);
+    row.getCell(0).setCellValue(nuevoId);
+    row.getCell(1).setCellValue(nuevoNombre);
+    row.getCell(2).setCellValue(nuevoApellido);
+    row.getCell(3).setCellValue(nuevoPeriodo);
+    row.getCell(4).setCellValue(nuevaCarrera);
+    row.getCell(5).setCellValue(nuevoTipo);
+    row.getCell(6).setCellValue(nuevaDescripcion);
+    row.getCell(7).setCellValue(fechaProtocolario);
 
-        String registro = nuevoId + "," + nuevoNombre + "," + nuevoApellido + "," + nuevoPeriodo
-                 + "," + nuevaCarrera + "," + nuevoTipo + "," + nuevaDescripcion + "," + fechaProtocolario;
-        filas.set(filaSeleccionada, registro);   
+    // Guardar los datos actualizados en un archivo temporal
+    String archivoTemporal = "alumnos_temp.xlsx";
+    FileOutputStream outFile = new FileOutputStream(new File(archivoTemporal));
+    workbook.write(outFile);
+    outFile.close();
+    workbook.close();
+    file.close();
 
-         objArchivoTexto.editarArchivo("db/alumnos.txt", filas);            
-     
+            // Reemplazar el archivo original con el archivo temporal
+            File originalFile = new File("alumnos.xlsx");
+            File temporalFile = new File(archivoTemporal);
+            if (originalFile.exists()) {
+                originalFile.delete();
+            }
+            temporalFile.renameTo(originalFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
       }
     
 

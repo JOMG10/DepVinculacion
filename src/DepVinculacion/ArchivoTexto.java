@@ -209,6 +209,8 @@ public class ArchivoTexto {
 
                     XSSFSheet hoja = libro.getSheetAt(0);
                     int ultimaFila = hoja.getLastRowNum() + 1; // Obtener la última fila y sumar 1 para agregar la nueva fila
+                    
+                    System.out.print(ultimaFila);
 
                     // Crear la nueva fila y agregar los datos
                     Row nuevaFila = hoja.createRow(ultimaFila); 

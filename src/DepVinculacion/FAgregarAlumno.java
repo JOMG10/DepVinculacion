@@ -246,10 +246,6 @@ public class FAgregarAlumno extends javax.swing.JFrame {
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     String fechaProtocolario = dateFormat.format(fechaSeleccionada);
 
-    // Utiliza el valor de fechaSeleccionadaStr donde lo necesites
-
-        ArchivoTexto objArchivoTexto =  new ArchivoTexto();
-        Alumno objAlumno = new Alumno();
         String numeroControl = this.txtNumControl.getText();
         String nombre = this.txtNombre.getText();
         String apellidos = this.txtApellidos.getText();
@@ -262,7 +258,7 @@ public class FAgregarAlumno extends javax.swing.JFrame {
         DefaultTableModel modelo = dtm;
 
     modelo.addRow(new Object[]{numeroControl, nombre, apellidos, semestre, carrera, tipo, descripcion});
-    guardarRegistro(numeroControl, nombre, apellidos, semestre, carrera, tipo, descripcion,fechaProtocolario, "alumnos.xlsx");
+    guardarRegistro(numeroControl, nombre, apellidos, semestre, carrera, tipo, descripcion,fechaProtocolario);
         
         
     }//GEN-LAST:event_btnGuardarMouseClicked
@@ -275,7 +271,7 @@ public class FAgregarAlumno extends javax.swing.JFrame {
 
     private javax.swing.JComboBox<String> comboBox;
 
-    private void guardarRegistro(String numeroControl,String nombre, String apellidos,String semestre,String carrera,String tipo,String descripcion,String fechaProtocolario,String nombreArchivo){
+    private void guardarRegistro(String numeroControl,String nombre, String apellidos,String semestre,String carrera,String tipo,String descripcion,String fechaProtocolario){
 
       
                 Alumno objAlumno = new Alumno();
@@ -293,7 +289,7 @@ public class FAgregarAlumno extends javax.swing.JFrame {
                 
                 
 
-            try (InputStream archivo = new FileInputStream(nombreArchivo);
+            try (InputStream archivo = new FileInputStream("alumnos.xlsx");
            XSSFWorkbook libro = new XSSFWorkbook(archivo)) {
 
           XSSFSheet hoja = libro.getSheetAt(0);
@@ -310,7 +306,7 @@ public class FAgregarAlumno extends javax.swing.JFrame {
           nuevaFila.createCell(6).setCellValue(descripcion);
           nuevaFila.createCell(7).setCellValue(fechaProtocolario);
           
-           String[] fila={
+           String[] filas={
                     String.valueOf(numeroControl),
                                    nombre,
                                    apellidos,
@@ -319,9 +315,9 @@ public class FAgregarAlumno extends javax.swing.JFrame {
                                    tipo,
                                    descripcion, 
                                    fechaProtocolario};
-                    this.dtm.addRow(fila);
+                    this.dtm.addRow(filas);
         
-        System.out.println(Arrays.toString(fila));
+        System.out.println(Arrays.toString(filas));
 
 
         limpiarCajas();
@@ -329,7 +325,7 @@ public class FAgregarAlumno extends javax.swing.JFrame {
 JOptionPane.showMessageDialog(this, "Se ha agregado el alumno correctamente");
 
           // Guardar los cambios en el archivo Excel
-          try (FileOutputStream fileOut = new FileOutputStream(nombreArchivo)) {
+          try (FileOutputStream fileOut = new FileOutputStream("alumnos.xlsx")) {
               libro.write(fileOut);
           }
 

@@ -7,12 +7,20 @@ package DepVinculacion;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -26,6 +34,10 @@ public class ArchivoTexto {
     private FileReader fReader;
     private BufferedWriter escribir;
     private BufferedReader leer;
+DefaultTableModel dtm = new DefaultTableModel();
+    private FMenuAlumnos fmenuAlumnos;
+
+
         
     public ArchivoTexto() {        
         this.fWriter = null;
@@ -33,6 +45,7 @@ public class ArchivoTexto {
         this.escribir = null;
         this.leer = null;        
         this.archivo = null;
+        this.fmenuAlumnos = fmenuAlumnos;
     }
     
     protected boolean existeArchivo(String nombreArchivo) {    
@@ -171,5 +184,81 @@ public class ArchivoTexto {
             e.printStackTrace();
         }  
     }
+    
+    public boolean guardarRegistro(String numeroControl,String nombre, String apellidos,String semestre,String carrera,String tipo,String descripcion,String fechaProtocolario){
+
+      
+                FMenuAlumnos objFMenuAlumnos = new FMenuAlumnos();
+
+        if (!numeroControl.matches("\\d+")) {
+        JOptionPane.showMessageDialog(null, "El número de control debe contener solo números.", "Error", JOptionPane.ERROR_MESSAGE);
+        }else{
+              
+            if (numeroControl.isEmpty() || nombre.isEmpty() || apellidos.isEmpty() 
+                    || semestre.isEmpty() || carrera.isEmpty() || tipo.isEmpty() 
+                    || descripcion.isEmpty()) {
+                 JOptionPane.showMessageDialog(null, "Por favor complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+            }else{                  
+                
+                if(objFMenuAlumnos.buscarPorNumeroControl(numeroControl)){
+                   JOptionPane.showMessageDialog(null, "el alumno ya existe");               
+                }else{
+                    
+                    try (InputStream archivo = new FileInputStream("alumnos.xlsx");
+                    XSSFWorkbook libro = new XSSFWorkbook(archivo)) {
+
+                    XSSFSheet hoja = libro.getSheetAt(0);
+                    int ultimaFila = hoja.getLastRowNum() + 1; // Obtener la última fila y sumar 1 para agregar la nueva fila
+
+                    // Crear la nueva fila y agregar los datos
+                    Row nuevaFila = hoja.createRow(ultimaFila); 
+                    nuevaFila.createCell(0).setCellValue(numeroControl);
+                    nuevaFila.createCell(1).setCellValue(nombre);
+                    nuevaFila.createCell(2).setCellValue(apellidos);
+                    nuevaFila.createCell(3).setCellValue(semestre);
+                    nuevaFila.createCell(4).setCellValue(carrera);
+                    nuevaFila.createCell(5).setCellValue(tipo);
+                    nuevaFila.createCell(6).setCellValue(descripcion);
+                    nuevaFila.createCell(7).setCellValue(fechaProtocolario);
+
+                   if (dtm != null) {
+                        String[] filas = {
+                            String.valueOf(numeroControl),
+                            nombre,
+                            apellidos,
+                            String.valueOf(semestre),
+                            carrera,
+                            tipo,
+                            descripcion,
+                            fechaProtocolario
+                        };
+                       
+                        
+                        JOptionPane.showMessageDialog(null, "Se ha agregado el alumno correctamente");
+                    } else {
+                        // Maneja el caso donde dtm es null, tal vez lanzando un mensaje de error o inicializando dtm adecuadamente.
+                        JOptionPane.showMessageDialog(null, "Error: El modelo de tabla no está inicializado correctamente");
+                    }
+
+          // Guardar los cambios en el archivo Excel
+                try (FileOutputStream fileOut = new FileOutputStream("alumnos.xlsx")) {
+                    libro.write(fileOut);
+                }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }  
+                    return true;                    
+
+
+            }
+
+        }
+    }     
+        return false;
+  }
+
+
+    
     
 }

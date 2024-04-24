@@ -231,11 +231,13 @@ public class FAgregarAlumno extends javax.swing.JFrame {
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         // TODO add your handling code here:
+        /*
             JTable tblAlumnos = dtm.tblAlumnos;
             
                 DefaultTableModel modelo = (DefaultTableModel) tblAlumnos.getModel();
 
 
+*/
 
         //boton para guardar un nuevo registro
         this.txtNumControl.requestFocus(); 

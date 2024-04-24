@@ -223,7 +223,7 @@ public class FAgregarAlumno extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         
-        ArchivoTexto objArchivo =new ArchivoTexto();
+    ArchivoTexto objArchivo =new ArchivoTexto();
     //boton para guardar un nuevo registro
     this.txtNumControl.requestFocus(); 
   
@@ -245,12 +245,12 @@ public class FAgregarAlumno extends javax.swing.JFrame {
                  
         DefaultTableModel modelo = dtm;
 
-    modelo.addRow(new Object[]{numeroControl, nombre, apellidos, semestre, carrera, tipo, descripcion});
+    
     boolean dato=objArchivo.guardarRegistro(numeroControl, nombre, apellidos, semestre, carrera, tipo, descripcion, fechaProtocolario);
         
     if(dato){
         limpiarCajas();
-        
+        modelo.addRow(new Object[]{numeroControl, nombre, apellidos, semestre, carrera, tipo, descripcion});        
     }
         
     }//GEN-LAST:event_btnGuardarMouseClicked

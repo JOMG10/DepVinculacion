@@ -5,9 +5,17 @@
 package DepVinculacion;
 import java.util.ArrayList;
 import java.awt.Font;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class FMenuAlumnos extends javax.swing.JFrame {
     
@@ -18,7 +26,11 @@ public class FMenuAlumnos extends javax.swing.JFrame {
     public FMenuAlumnos() {
         initComponents();        
         llenarTabla();
-    }    
+    } 
+    
+     public JTable getTblAlumnosFromFMenuAlumnos(FMenuAlumnos fMenuAlumnos) {
+        return fMenuAlumnos.tblAlumnos;
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -72,16 +84,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         tblAlumnos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         tblAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Num. Control", "Nombre", "Apellidos", "Periodo", "Carrera", "Titulacion", "Descipcion", "Fecha de acto protocolario"
@@ -207,7 +210,8 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     private void llenarTabla(){
-        
+        DefaultTableModel modelo = (DefaultTableModel) tblAlumnos.getModel();        
+      
         tblAlumnos.setRowHeight(30);
         tblAlumnos.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16)); 
 
@@ -216,21 +220,42 @@ public class FMenuAlumnos extends javax.swing.JFrame {
                                     };                
         this.dtm =  new DefaultTableModel(this.columnas,0);        
   
-                ArrayList<String> listaHuespedes ;        
+               try (InputStream archivo = new FileInputStream("alumnos.xlsx");
+             XSSFWorkbook libro = new XSSFWorkbook(archivo)) {
 
-        ArchivoTexto objArchivoTexto = new ArchivoTexto();
-        if (objArchivoTexto.existeArchivo("db/alumnos.txt")){           
-            objArchivoTexto.abrirArchivo("db/alumnos.txt",'r');            
-            listaHuespedes = objArchivoTexto.leerLineas();
-            Iterator <String> it=listaHuespedes.iterator();
-            while(it.hasNext()){  //Si hay registros entra
-                //cuando encuentre una coma y lo pasamos a un arreglo de tipo String
-                String registro[]=it.next().split(",");
-                dtm.addRow(registro);
+            XSSFSheet hoja = libro.getSheetAt(0);
+            Iterator<Row> filaIterator = hoja.iterator();
+
+            while (filaIterator.hasNext()) {
+                Row fila = filaIterator.next();
+                Iterator<Cell> celdaIterator = fila.iterator();
+
+                String nombre = "";
+                String apellido = "";
+                int edad = 0;
+
+                while (celdaIterator.hasNext()) {
+                    Cell celda = celdaIterator.next();
+                    int indiceColumna = celda.getColumnIndex();
+
+                    switch (indiceColumna) {
+                        case 0:
+                            nombre = celda.getStringCellValue();
+                            break;
+                        case 1:
+                            apellido = celda.getStringCellValue();
+                            break;
+                        case 2:
+                            edad = (int) celda.getNumericCellValue();
+                            break;
+                    }
+                }
+
+                modelo.addRow(new Object[]{nombre, apellido, edad});
             }
-            objArchivoTexto.cerrarArchivo('r');            
-        }                
-         this.tblAlumnos.setModel(dtm);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
       int fila = this.tblAlumnos.getSelectedRow();

@@ -221,8 +221,8 @@ public final class FMenuAlumnos extends javax.swing.JFrame {
                                     };                
         this.dtm =  new DefaultTableModel(this.columnas,0);        
   
-            try (InputStream archivo = new FileInputStream("alumnos.xlsx");
-            XSSFWorkbook libro = new XSSFWorkbook(archivo)) {
+               try (InputStream archivo = new FileInputStream("alumnos.xlsx");
+             XSSFWorkbook libro = new XSSFWorkbook(archivo)) {
 
             XSSFSheet hoja = libro.getSheetAt(0);
             Iterator<Row> filaIterator = hoja.iterator();
@@ -331,10 +331,13 @@ public final class FMenuAlumnos extends javax.swing.JFrame {
                    
         boolean dato = buscarPorNumeroControl(txtBuscarAlumno.getText());
         
-        if(dato == false){
-             JOptionPane.showMessageDialog(this, "No se encontró ningún alumno con ese número de control.");         
-        }
+        if(!dato){
+                    JOptionPane.showMessageDialog(this, "No se encontro ningun alumno con ese numero de control");
 
+        }
+        
+        limpiarCajas();
+        
     }//GEN-LAST:event_btnBuscarMouseClicked
 
     
@@ -349,19 +352,11 @@ public final class FMenuAlumnos extends javax.swing.JFrame {
         for (int i = 0; i < tblAlumnos.getRowCount(); i++) {
             if (tblAlumnos.getValueAt(i, 0).equals(numeroControl)) {
                 // Si se encuentra el número de control, selecciona la fila y muestra un mensaje
-                tblAlumnos.setRowSelectionInterval(i, i);
-                
-                /*
-                JOptionPane.showMessageDialog(this, "Alumno encontrado:\n" +
-                        "Número de control: " + tblAlumnos.getValueAt(i, 0) + "\n" +
-                        "Nombre: " + tblAlumnos.getValueAt(i, 1) + "\n" +
-                        "Apellido: " + tblAlumnos.getValueAt(i, 2));
-                return; // Termina la búsqueda
-                */
+                tblAlumnos.setRowSelectionInterval(i, i);              
+               
                 return true;
             }
         }
-        // Si no se encuentra, muestra un mensaje de error
         return false;
     }
        

@@ -221,8 +221,8 @@ public final class FMenuAlumnos extends javax.swing.JFrame {
                                     };                
         this.dtm =  new DefaultTableModel(this.columnas,0);        
   
-               try (InputStream archivo = new FileInputStream("alumnos.xlsx");
-             XSSFWorkbook libro = new XSSFWorkbook(archivo)) {
+            try (InputStream archivo = new FileInputStream("alumnos.xlsx");
+            XSSFWorkbook libro = new XSSFWorkbook(archivo)) {
 
             XSSFSheet hoja = libro.getSheetAt(0);
             Iterator<Row> filaIterator = hoja.iterator();

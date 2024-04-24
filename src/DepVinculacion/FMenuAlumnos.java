@@ -5,15 +5,21 @@
 package DepVinculacion;
 import java.util.ArrayList;
 import java.awt.Font;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.RandomAccessFile;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -24,7 +30,7 @@ public final class FMenuAlumnos extends javax.swing.JFrame {
 
 
     public FMenuAlumnos() {
-        initComponents();        
+        initComponents(); 
         llenarTabla();
         dtm = (DefaultTableModel) tblAlumnos.getModel();
 
@@ -210,7 +216,32 @@ public final class FMenuAlumnos extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+   // Método para verificar si el archivo Excel está abierto
+public static boolean isFileOpen(File file) {
+    try {
+        FileChannel channel = new RandomAccessFile(file, "rw").getChannel();
+        FileLock lock = channel.tryLock();
+        if (lock != null) {
+            lock.release();
+            channel.close();
+            return false;
+        }
+        channel.close();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    return true;
+}
+
+    
+    
     public void llenarTabla(){
+        
+           File excelFile = new File("alumnos.xlsx");
+        if (isFileOpen(excelFile)) {
+            JOptionPane.showMessageDialog(this, "El archivo de Excel está abierto por otro programa. Ciérrelo y vuelva a intentarlo.");
+            return;
+        }
         DefaultTableModel modelo = (DefaultTableModel) tblAlumnos.getModel();        
       
         tblAlumnos.setRowHeight(30);
@@ -369,6 +400,12 @@ public final class FMenuAlumnos extends javax.swing.JFrame {
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
      
 
+        
+             File excelFile = new File("alumnos.xlsx");
+        if (isFileOpen(excelFile)) {
+            JOptionPane.showMessageDialog(this, "El archivo de Excel está abierto por otro programa. Ciérrelo y vuelva a intentarlo.");
+            return;
+        }
        int fila = this.tblAlumnos.getSelectedRow();
     if (fila != -1) {
         String numControl = this.tblAlumnos.getValueAt(fila, 0).toString();
@@ -395,6 +432,12 @@ public final class FMenuAlumnos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarMouseClicked
 
     private void btnAgregarNuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarNuevoMouseClicked
+        
+             File excelFile = new File("alumnos.xlsx");
+        if (isFileOpen(excelFile)) {
+            JOptionPane.showMessageDialog(this, "El archivo de Excel está abierto por otro programa. Ciérrelo y vuelva a intentarlo.");
+            return;
+        }
         FAgregarAlumno objAgregarAlumno = new FAgregarAlumno(this.dtm);
         objAgregarAlumno.setVisible(true);
     }//GEN-LAST:event_btnAgregarNuevoMouseClicked
@@ -430,6 +473,7 @@ public final class FMenuAlumnos extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
+       
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

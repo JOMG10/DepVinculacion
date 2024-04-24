@@ -9,7 +9,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -232,12 +231,8 @@ public class FAgregarAlumno extends javax.swing.JFrame {
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         // TODO add your handling code here:
         
-      
-
-
-
-        //boton para guardar un nuevo registro
-        this.txtNumControl.requestFocus(); 
+    //boton para guardar un nuevo registro
+    this.txtNumControl.requestFocus(); 
   
         // Obtener la fecha seleccionada
     Date fechaSeleccionada = jCalendar1.getDate();
@@ -274,22 +269,25 @@ public class FAgregarAlumno extends javax.swing.JFrame {
     private void guardarRegistro(String numeroControl,String nombre, String apellidos,String semestre,String carrera,String tipo,String descripcion,String fechaProtocolario){
 
       
-                Alumno objAlumno = new Alumno();
+                FMenuAlumnos objFMenuAlumnos = new FMenuAlumnos();
 
         if (!numeroControl.matches("\\d+")) {
         JOptionPane.showMessageDialog(null, "El número de control debe contener solo números.", "Error", JOptionPane.ERROR_MESSAGE);
-        return; // Salir del método si el número de control no es válido
           }else{
               
             if (numeroControl.isEmpty() || nombre.isEmpty() || apellidos.isEmpty() 
                     || semestre.isEmpty() || carrera.isEmpty() || tipo.isEmpty() 
                     || descripcion.isEmpty()) {
                  JOptionPane.showMessageDialog(null, "Por favor complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-             }else{   
+             }else{                   
                 
-                
+                if(objFMenuAlumnos.buscarPorNumeroControl(numeroControl)){
+                   JOptionPane.showMessageDialog(this, "el alumno ya existe");
 
-            try (InputStream archivo = new FileInputStream("alumnos.xlsx");
+                    
+                }else{
+                    
+                      try (InputStream archivo = new FileInputStream("alumnos.xlsx");
            XSSFWorkbook libro = new XSSFWorkbook(archivo)) {
 
           XSSFSheet hoja = libro.getSheetAt(0);
@@ -316,13 +314,10 @@ public class FAgregarAlumno extends javax.swing.JFrame {
                                    descripcion, 
                                    fechaProtocolario};
                     this.dtm.addRow(filas);
-        
-        System.out.println(Arrays.toString(filas));
-
 
         limpiarCajas();
 
-JOptionPane.showMessageDialog(this, "Se ha agregado el alumno correctamente");
+        JOptionPane.showMessageDialog(this, "Se ha agregado el alumno correctamente");
 
           // Guardar los cambios en el archivo Excel
           try (FileOutputStream fileOut = new FileOutputStream("alumnos.xlsx")) {
@@ -331,12 +326,10 @@ JOptionPane.showMessageDialog(this, "Se ha agregado el alumno correctamente");
 
       } catch (IOException e) {
           e.printStackTrace();
-      }
-
+      }               
                     
-                    
-                    
-      
+                }
+         
         }
        
          }      

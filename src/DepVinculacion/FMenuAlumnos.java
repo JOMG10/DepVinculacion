@@ -123,7 +123,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(51, 204, 255));
+        jPanel1.setBackground(new java.awt.Color(153, 255, 153));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -327,21 +327,13 @@ public class FMenuAlumnos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
-        String numControl = this.txtBuscarAlumno.getText();
-        boolean encontrado = false; // Variable para indicar si se encontró el número de control
+                   
+        boolean dato = buscarPorNumeroControl(txtBuscarAlumno.getText());
+        
+        if(dato == false){
+             JOptionPane.showMessageDialog(this, "No se encontró ningún alumno con ese número de control.");         
+        }
 
-        for (int i = 0; i < tblAlumnos.getRowCount(); i++) {           
-            if (tblAlumnos.getValueAt(i, 0).equals(numControl)) {                                           
-                tblAlumnos.changeSelection(i, 0, false, false);
-                encontrado = true; // Marcamos que se ha encontrado el número de control
-                break;
-            }
-            limpiarCajas();
-        }        
-        if (!encontrado) {
-            JOptionPane.showMessageDialog(null, "No se encontró el alumno con el número de control especificado.", "Error", JOptionPane.ERROR_MESSAGE);
-        }        
-      
     }//GEN-LAST:event_btnBuscarMouseClicked
 
     
@@ -349,6 +341,28 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         this.txtBuscarAlumno.setText("");  
     }
        
+       
+       
+    // Método para buscar por número de control
+    public boolean buscarPorNumeroControl(String numeroControl) {
+        for (int i = 0; i < tblAlumnos.getRowCount(); i++) {
+            if (tblAlumnos.getValueAt(i, 0).equals(numeroControl)) {
+                // Si se encuentra el número de control, selecciona la fila y muestra un mensaje
+                tblAlumnos.setRowSelectionInterval(i, i);
+                
+                /*
+                JOptionPane.showMessageDialog(this, "Alumno encontrado:\n" +
+                        "Número de control: " + tblAlumnos.getValueAt(i, 0) + "\n" +
+                        "Nombre: " + tblAlumnos.getValueAt(i, 1) + "\n" +
+                        "Apellido: " + tblAlumnos.getValueAt(i, 2));
+                return; // Termina la búsqueda
+                */
+                return true;
+            }
+        }
+        // Si no se encuentra, muestra un mensaje de error
+        return false;
+    }
        
                
 

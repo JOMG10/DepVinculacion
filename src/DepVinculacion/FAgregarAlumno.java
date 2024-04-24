@@ -294,7 +294,7 @@ public class FAgregarAlumno extends javax.swing.JFrame {
           int ultimaFila = hoja.getLastRowNum() + 1; // Obtener la última fila y sumar 1 para agregar la nueva fila
 
           // Crear la nueva fila y agregar los datos
-          Row nuevaFila = hoja.createRow(ultimaFila);
+          Row nuevaFila = hoja.createRow(ultimaFila); 
           nuevaFila.createCell(0).setCellValue(numeroControl);
           nuevaFila.createCell(1).setCellValue(nombre);
           nuevaFila.createCell(2).setCellValue(apellidos);

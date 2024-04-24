@@ -17,7 +17,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class FMenuAlumnos extends javax.swing.JFrame {
+public final class FMenuAlumnos extends javax.swing.JFrame {
     
     String[] columnas;
     DefaultTableModel dtm;
@@ -26,12 +26,13 @@ public class FMenuAlumnos extends javax.swing.JFrame {
     public FMenuAlumnos() {
         initComponents();        
         llenarTabla();
+        dtm = (DefaultTableModel) tblAlumnos.getModel();
+
     } 
     
-     public JTable getTblAlumnosFromFMenuAlumnos(FMenuAlumnos fMenuAlumnos) {
-        return fMenuAlumnos.tblAlumnos;
-    }
-
+    
+    
+ 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -231,7 +232,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
                 Iterator<Cell> celdaIterator = fila.iterator();             
                 
          
-         String numeroControl = "";
+         String numeroControl = "" ;
                 String nombre = "";
                 String apellido = "";
                 String semestre = "";
@@ -246,7 +247,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
 
                     switch (indiceColumna) {
                         case 0:
-                            numeroControl = celda.getStringCellValue();
+                            numeroControl =  celda.getStringCellValue();
                             break;
                         case 1:
                             nombre = celda.getStringCellValue();

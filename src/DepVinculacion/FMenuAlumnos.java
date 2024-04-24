@@ -375,33 +375,25 @@ public static boolean isFileOpen(File file) {
         
     }//GEN-LAST:event_btnBuscarMouseClicked
 
-    
-       private void limpiarCajas(){
+    private void limpiarCajas(){
         this.txtBuscarAlumno.setText("");  
     }
-       
-       
-       
+          
     // Método para buscar por número de control
     public boolean buscarPorNumeroControl(String numeroControl) {
         for (int i = 0; i < tblAlumnos.getRowCount(); i++) {
             if (tblAlumnos.getValueAt(i, 0).equals(numeroControl)) {
-                // Si se encuentra el número de control, selecciona la fila y muestra un mensaje
-                tblAlumnos.setRowSelectionInterval(i, i);              
-               
+                tblAlumnos.setRowSelectionInterval(i, i);          
                 return true;
             }
         }
         return false;
     }
-       
-               
+                   
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
-     
-
-        
-             File excelFile = new File("alumnos.xlsx");
+    
+        File excelFile = new File("alumnos.xlsx");
         if (isFileOpen(excelFile)) {
             JOptionPane.showMessageDialog(this, "El archivo de Excel está abierto por otro programa. Ciérrelo y vuelva a intentarlo.");
             return;

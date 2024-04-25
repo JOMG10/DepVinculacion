@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package DepVinculacion;
-import java.util.ArrayList;
 import java.awt.Font;
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,11 +14,9 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -33,10 +30,8 @@ public final class FMenuAlumnos extends javax.swing.JFrame {
         initComponents(); 
         llenarTabla();
         dtm = (DefaultTableModel) tblAlumnos.getModel();
-
     } 
-    
-    
+ 
     
  
     @SuppressWarnings("unchecked")
@@ -237,7 +232,7 @@ public static boolean isFileOpen(File file) {
     
     public void llenarTabla(){
         
-           File excelFile = new File("alumnos.xlsx");
+           File excelFile = new File("db/alumnos.xlsx");
         if (isFileOpen(excelFile)) {
             JOptionPane.showMessageDialog(this, "El archivo de Excel está abierto por otro programa. Ciérrelo y vuelva a intentarlo.");
             return;
@@ -252,7 +247,7 @@ public static boolean isFileOpen(File file) {
                                     };                
         this.dtm =  new DefaultTableModel(this.columnas,0);        
   
-               try (InputStream archivo = new FileInputStream("alumnos.xlsx");
+               try (InputStream archivo = new FileInputStream("db/alumnos.xlsx");
              XSSFWorkbook libro = new XSSFWorkbook(archivo)) {
 
             XSSFSheet hoja = libro.getSheetAt(0);
@@ -315,102 +310,18 @@ public static boolean isFileOpen(File file) {
         }
     }
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-   eliminarFilaCompleta();
-   /*
-      int fila = this.tblAlumnos.getSelectedRow();
-      
-    if (fila != -1) {
-        String numIdentidadEliminar = this.tblAlumnos.getValueAt(fila, 0).toString();
-        
-        // Abrir el archivo para lectura
-        ArchivoTexto objArchivoTexto = new ArchivoTexto();
-        objArchivoTexto.abrirArchivo("db/alumnos.txt", 'r');
-        
-        // Buscar el registro
-        boolean encontrado = objArchivoTexto.buscarRegistro(numIdentidadEliminar);
-        
-        if (encontrado) {
-            int respuesta = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminarlo?");
-            if (respuesta == 0) {
-                // Abrir archivo original para lectura
-                objArchivoTexto.abrirArchivo("db/alumnos.txt", 'r');
-                // Abrir archivo temporal para escritura
-                ArchivoTexto objArchivoTextoTemporal = new ArchivoTexto();
-                objArchivoTextoTemporal.abrirArchivo("db/temporal.txt", 'w');
-                
-                // Eliminar registro del archivo original y escribir en el archivo temporal
-                boolean eliminado = objArchivoTexto.eliminarRegistro(numIdentidadEliminar, objArchivoTextoTemporal);
-                
-                // Cerrar archivos
-                objArchivoTextoTemporal.cerrarArchivo('w');
-                objArchivoTexto.cerrarArchivo('r');
-                
-                // Reemplazar archivo original con archivo temporal
-                objArchivoTexto.eliminarArchivo("db/alumnos.txt");
-                objArchivoTextoTemporal.cambiarNombre("db/temporal.txt", "db/alumnos.txt");
-                
-                if (eliminado) {
-                    this.dtm.removeRow(fila);
-                    JOptionPane.showMessageDialog(this, "Registro Eliminado");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Error al eliminar el registro");
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "El registro no existe");
-        }
-    } else {
-        JOptionPane.showMessageDialog(this, "Selecciona una fila");
-    }
-    
-    */
-    }//GEN-LAST:event_btnEliminarMouseClicked
-
-    
-   private void eliminarFilaCompleta() {
-    int filaSeleccionada = tblAlumnos.getSelectedRow();
-    if (filaSeleccionada != -1) {
-        // Ajustar el índice de la fila seleccionada para omitir la fila de los títulos
-        int indiceFilaExcel = filaSeleccionada + 1;
-
-        // Eliminar fila del archivo Excel
-        try (InputStream file = new FileInputStream("alumnos.xlsx");
-             XSSFWorkbook workbook = new XSSFWorkbook(file)) {
-
-            XSSFSheet sheet = workbook.getSheetAt(0);
-            int ultimaFila = sheet.getLastRowNum();
-
-            if (indiceFilaExcel < ultimaFila) {
-                // Eliminar la fila del archivo Excel
-                sheet.removeRow(sheet.getRow(indiceFilaExcel));
-
-                // Desplazar las filas hacia arriba para que no quede vacía
-                sheet.shiftRows(indiceFilaExcel + 1, ultimaFila, -1);
-            } else {
-                // Si es la última fila, simplemente elimina la fila sin desplazar
-                sheet.removeRow(sheet.getRow(indiceFilaExcel));
-            }
-
-            try (FileOutputStream outFile = new FileOutputStream(new File("alumnos.xlsx"))) {
-                workbook.write(outFile);
-            }
-
-            JOptionPane.showMessageDialog(this, "Fila eliminada del archivo Excel");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al eliminar la fila del archivo Excel");
+       File excelFile = new File("db/alumnos.xlsx");
+        if (isFileOpen(excelFile)) {
+            JOptionPane.showMessageDialog(this, "El archivo de Excel está abierto por otro programa. Ciérrelo y vuelva a intentarlo.");
             return;
         }
-
-        // Eliminar fila de la tabla
-        dtm.removeRow(filaSeleccionada);
-        JOptionPane.showMessageDialog(this, "Fila eliminada de la tabla");
-    } else {
-        JOptionPane.showMessageDialog(this, "Selecciona una fila para eliminar");
-    }
-}
-
+        ArchivoTexto objArchivoTexto= new ArchivoTexto();
+        int filaSeleccionada = tblAlumnos.getSelectedRow();
+        int fila=objArchivoTexto.eliminarAlumno(filaSeleccionada);      
+        
+        dtm.removeRow(fila);
+   
+    }//GEN-LAST:event_btnEliminarMouseClicked
 
 
      
@@ -419,7 +330,7 @@ public static boolean isFileOpen(File file) {
         boolean dato = buscarPorNumeroControl(txtBuscarAlumno.getText());
         
         if(!dato){
-                    JOptionPane.showMessageDialog(this, "No se encontro ningun alumno con ese numero de control");
+            JOptionPane.showMessageDialog(this, "No se encontro ningun alumno con ese numero de control");
 
         }
         
@@ -445,7 +356,7 @@ public static boolean isFileOpen(File file) {
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
     
-        File excelFile = new File("alumnos.xlsx");
+        File excelFile = new File("db/alumnos.xlsx");
         if (isFileOpen(excelFile)) {
             JOptionPane.showMessageDialog(this, "El archivo de Excel está abierto por otro programa. Ciérrelo y vuelva a intentarlo.");
             return;
@@ -477,7 +388,7 @@ public static boolean isFileOpen(File file) {
 
     private void btnAgregarNuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarNuevoMouseClicked
         
-             File excelFile = new File("alumnos.xlsx");
+             File excelFile = new File("db/alumnos.xlsx");
         if (isFileOpen(excelFile)) {
             JOptionPane.showMessageDialog(this, "El archivo de Excel está abierto por otro programa. Ciérrelo y vuelva a intentarlo.");
             return;

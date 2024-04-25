@@ -125,16 +125,18 @@ public final class FMenuAlumnos extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(153, 255, 153));
+        jPanel1.setBackground(new java.awt.Color(0, 102, 255));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("DEPARTAMENTO DE GESTION TECNOLOGICA Y VINCULACION");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DepVinculacion/imagenes/imagen_2024-04-09_144237770.png"))); // NOI18N
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("INSTITUTO TECNOLOGICO DEL VALLE DE OAXACA");
 

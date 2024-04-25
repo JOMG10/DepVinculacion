@@ -348,7 +348,8 @@ public static boolean isFileOpen(File file) {
     // Método para buscar por número de control
     public boolean buscarPorNumeroControl(String numeroControl) {
         for (int i = 0; i < tblAlumnos.getRowCount(); i++) {
-            if (tblAlumnos.getValueAt(i, 0).equals(numeroControl)) {
+              int numControl = Integer.parseInt(numeroControl);
+            if (tblAlumnos.getValueAt(i, 0).equals(numControl)) {
                 tblAlumnos.setRowSelectionInterval(i, i);          
                 return true;
             }

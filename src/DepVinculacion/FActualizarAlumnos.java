@@ -288,6 +288,8 @@ public class FActualizarAlumnos extends javax.swing.JFrame {
         String nuevaDescripcion = this.txtDescripcion.getText();
         String fechaProtocolario = dateFormat.format(fechaSeleccionada);
 
+        int id = Integer.parseInt(nuevoId);
+
         
         dtm.setValueAt(nuevoId,filaSeleccionada, 0);
         dtm.setValueAt(nuevoNombre, filaSeleccionada, 1);
@@ -306,7 +308,7 @@ public class FActualizarAlumnos extends javax.swing.JFrame {
     
 
     Row row = sheet.getRow(filaSeleccionada+1);
-    row.getCell(0).setCellValue(nuevoId);
+    row.getCell(0).setCellValue(id);
     row.getCell(1).setCellValue(nuevoNombre);
     row.getCell(2).setCellValue(nuevoApellido);
     row.getCell(3).setCellValue(nuevoPeriodo);

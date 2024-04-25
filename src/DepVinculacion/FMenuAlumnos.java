@@ -353,6 +353,8 @@ public boolean buscarPorNumeroControl(String numeroControl) {
         String numControl = tblAlumnos.getValueAt(i, 0).toString();
         if (numControl.equals(numeroControl)) {
             tblAlumnos.setRowSelectionInterval(i, i);
+                        tblAlumnos.scrollRectToVisible(tblAlumnos.getCellRect(i, 0, true)); // Desplazar la tabla a la fila encontrada
+
             return true;
         }
     }

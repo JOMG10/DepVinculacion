@@ -300,7 +300,7 @@ public class FActualizarAlumnos extends javax.swing.JFrame {
         
              
      try {
-    FileInputStream file = new FileInputStream(new File("alumnos.xlsx"));
+    FileInputStream file = new FileInputStream(new File("db/alumnos.xlsx"));
     XSSFWorkbook workbook = new XSSFWorkbook(file);
     XSSFSheet sheet = workbook.getSheetAt(0);
     
@@ -316,7 +316,7 @@ public class FActualizarAlumnos extends javax.swing.JFrame {
     row.getCell(7).setCellValue(fechaProtocolario);
 
     // Guardar los datos actualizados en un archivo temporal
-    String archivoTemporal = "alumnos_temp.xlsx";
+    String archivoTemporal = "db/alumnos_temp.xlsx";
     FileOutputStream outFile = new FileOutputStream(new File(archivoTemporal));
     workbook.write(outFile);
     outFile.close();
@@ -324,7 +324,7 @@ public class FActualizarAlumnos extends javax.swing.JFrame {
     file.close();
 
             // Reemplazar el archivo original con el archivo temporal
-            File originalFile = new File("alumnos.xlsx");
+            File originalFile = new File("db/alumnos.xlsx");
             File temporalFile = new File(archivoTemporal);
             if (originalFile.exists()) {
                 originalFile.delete();

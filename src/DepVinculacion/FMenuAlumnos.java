@@ -318,10 +318,11 @@ public static boolean isFileOpen(File file) {
         ArchivoTexto objArchivoTexto= new ArchivoTexto();
         int filaSeleccionada = tblAlumnos.getSelectedRow();
         int fila=objArchivoTexto.eliminarAlumno(filaSeleccionada);      
-        
-        if(fila==1){
-            dtm.removeRow(fila);            
-        }
+     
+        if (fila != 0) {
+         dtm.removeRow(filaSeleccionada);
+         }
+
         
    
     }//GEN-LAST:event_btnEliminarMouseClicked

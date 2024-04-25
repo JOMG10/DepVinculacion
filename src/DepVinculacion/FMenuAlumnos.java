@@ -315,6 +315,8 @@ public static boolean isFileOpen(File file) {
         }
     }
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
+   eliminarFilaCompleta();
+   /*
       int fila = this.tblAlumnos.getSelectedRow();
       
     if (fila != -1) {
@@ -360,8 +362,48 @@ public static boolean isFileOpen(File file) {
     } else {
         JOptionPane.showMessageDialog(this, "Selecciona una fila");
     }
+    
+    */
     }//GEN-LAST:event_btnEliminarMouseClicked
 
+    
+     private void eliminarFilaCompleta() {
+        int filaSeleccionada = tblAlumnos.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            
+                System.out.println("Fila seleccionada en la tabla: " + filaSeleccionada + 1); // Imprimir el índice de fila seleccionado
+
+            // Eliminar fila del archivo Excel
+            try (InputStream file = new FileInputStream("alumnos.xlsx");
+                 XSSFWorkbook workbook = new XSSFWorkbook(file)) {
+
+                XSSFSheet sheet = workbook.getSheetAt(0);
+                sheet.removeRow(sheet.getRow(filaSeleccionada));
+
+                // Desplazar las filas hacia arriba para que no quede vacía
+                sheet.shiftRows(filaSeleccionada + 2, sheet.getLastRowNum(), -1);
+
+                try (FileOutputStream outFile = new FileOutputStream(new File("alumnos.xlsx"))) {
+                    workbook.write(outFile);
+                }
+
+                JOptionPane.showMessageDialog(this, "Fila eliminada del archivo Excel");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error al eliminar la fila del archivo Excel");
+                return;
+            }
+
+            // Eliminar fila de la tabla
+            dtm.removeRow(filaSeleccionada);
+            JOptionPane.showMessageDialog(this, "Fila eliminada de la tabla");
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona una fila para eliminar");
+        }
+    }
+
+     
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
                    
         boolean dato = buscarPorNumeroControl(txtBuscarAlumno.getText());

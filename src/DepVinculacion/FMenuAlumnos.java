@@ -262,7 +262,7 @@ public static boolean isFileOpen(File file) {
                 Iterator<Cell> celdaIterator = fila.iterator();             
                 
          
-         String numeroControl = "" ;
+         int numeroControl = 0;
                 String nombre = "";
                 String apellido = "";
                 String semestre = "";
@@ -277,8 +277,8 @@ public static boolean isFileOpen(File file) {
 
                     switch (indiceColumna) {
                         case 0:
-                            numeroControl =  celda.getStringCellValue();
-                            break;
+                           numeroControl = (int) celda.getNumericCellValue();
+                           break;
                         case 1:
                             nombre = celda.getStringCellValue();
                             break;
@@ -319,7 +319,10 @@ public static boolean isFileOpen(File file) {
         int filaSeleccionada = tblAlumnos.getSelectedRow();
         int fila=objArchivoTexto.eliminarAlumno(filaSeleccionada);      
         
-        dtm.removeRow(fila);
+        if(fila==1){
+            dtm.removeRow(fila);            
+        }
+        
    
     }//GEN-LAST:event_btnEliminarMouseClicked
 

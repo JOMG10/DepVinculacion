@@ -5,21 +5,40 @@
 package DepVinculacion;
 import java.util.ArrayList;
 import java.awt.Font;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.RandomAccessFile;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.util.IOUtils;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class FMenuAlumnos extends javax.swing.JFrame {
+public final class FMenuAlumnos extends javax.swing.JFrame {
     
     String[] columnas;
     DefaultTableModel dtm;
 
 
     public FMenuAlumnos() {
-        initComponents();        
+        initComponents(); 
         llenarTabla();
-    }    
+        dtm = (DefaultTableModel) tblAlumnos.getModel();
 
+    } 
+    
+    
+    
+ 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -72,16 +91,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         tblAlumnos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         tblAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Num. Control", "Nombre", "Apellidos", "Periodo", "Carrera", "Titulacion", "Descipcion", "Fecha de acto protocolario"
@@ -120,7 +130,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(51, 204, 255));
+        jPanel1.setBackground(new java.awt.Color(153, 255, 153));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -198,16 +208,42 @@ public class FMenuAlumnos extends javax.swing.JFrame {
                     .addComponent(btnAgregarNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
+                .addGap(87, 87, 87)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
                 .addGap(39, 39, 39))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    private void llenarTabla(){
+   // Método para verificar si el archivo Excel está abierto
+public static boolean isFileOpen(File file) {
+    try {
+        FileChannel channel = new RandomAccessFile(file, "rw").getChannel();
+        FileLock lock = channel.tryLock();
+        if (lock != null) {
+            lock.release();
+            channel.close();
+            return false;
+        }
+        channel.close();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    return true;
+}
+
+    
+    
+    public void llenarTabla(){
         
+           File excelFile = new File("alumnos.xlsx");
+        if (isFileOpen(excelFile)) {
+            JOptionPane.showMessageDialog(this, "El archivo de Excel está abierto por otro programa. Ciérrelo y vuelva a intentarlo.");
+            return;
+        }
+        DefaultTableModel modelo = (DefaultTableModel) tblAlumnos.getModel();        
+      
         tblAlumnos.setRowHeight(30);
         tblAlumnos.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16)); 
 
@@ -216,21 +252,67 @@ public class FMenuAlumnos extends javax.swing.JFrame {
                                     };                
         this.dtm =  new DefaultTableModel(this.columnas,0);        
   
-                ArrayList<String> listaHuespedes ;        
+               try (InputStream archivo = new FileInputStream("alumnos.xlsx");
+             XSSFWorkbook libro = new XSSFWorkbook(archivo)) {
 
-        ArchivoTexto objArchivoTexto = new ArchivoTexto();
-        if (objArchivoTexto.existeArchivo("db/alumnos.txt")){           
-            objArchivoTexto.abrirArchivo("db/alumnos.txt",'r');            
-            listaHuespedes = objArchivoTexto.leerLineas();
-            Iterator <String> it=listaHuespedes.iterator();
-            while(it.hasNext()){  //Si hay registros entra
-                //cuando encuentre una coma y lo pasamos a un arreglo de tipo String
-                String registro[]=it.next().split(",");
-                dtm.addRow(registro);
+            XSSFSheet hoja = libro.getSheetAt(0);
+            Iterator<Row> filaIterator = hoja.iterator();
+            
+             if (filaIterator.hasNext()) {
+        filaIterator.next(); // Ignorar la primera fila
+    }
+
+            while (filaIterator.hasNext()) {
+                Row fila = filaIterator.next();
+                Iterator<Cell> celdaIterator = fila.iterator();             
+                
+         
+         String numeroControl = "" ;
+                String nombre = "";
+                String apellido = "";
+                String semestre = "";
+                String carrera = "";
+                String tipo ="";
+                String descripcion="";
+                String fechaProtocolario="";
+
+                while (celdaIterator.hasNext()) {
+                    Cell celda = celdaIterator.next();
+                    int indiceColumna = celda.getColumnIndex();
+
+                    switch (indiceColumna) {
+                        case 0:
+                            numeroControl =  celda.getStringCellValue();
+                            break;
+                        case 1:
+                            nombre = celda.getStringCellValue();
+                            break;
+                        case 2:
+                            apellido = celda.getStringCellValue();
+                            break;
+                         case 3:
+                            semestre = celda.getStringCellValue();
+                            break;
+                        case 4:
+                            carrera = celda.getStringCellValue();
+                            break;
+                        case 5:
+                            tipo = celda.getStringCellValue();
+                            break;
+                        case 6:
+                            descripcion = celda.getStringCellValue();
+                            break;
+                        case 7:
+                            fechaProtocolario = celda.getStringCellValue();
+                            break;
+                    }
+                }
+
+                modelo.addRow(new Object[]{numeroControl, nombre, apellido, semestre, carrera, tipo, descripcion, fechaProtocolario});
             }
-            objArchivoTexto.cerrarArchivo('r');            
-        }                
-         this.tblAlumnos.setModel(dtm);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
       int fila = this.tblAlumnos.getSelectedRow();
@@ -281,34 +363,41 @@ public class FMenuAlumnos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
-        String numControl = this.txtBuscarAlumno.getText();
-        boolean encontrado = false; // Variable para indicar si se encontró el número de control
+                   
+        boolean dato = buscarPorNumeroControl(txtBuscarAlumno.getText());
+        
+        if(!dato){
+                    JOptionPane.showMessageDialog(this, "No se encontro ningun alumno con ese numero de control");
 
-        for (int i = 0; i < tblAlumnos.getRowCount(); i++) {           
-            if (tblAlumnos.getValueAt(i, 0).equals(numControl)) {                                           
-                tblAlumnos.changeSelection(i, 0, false, false);
-                encontrado = true; // Marcamos que se ha encontrado el número de control
-                break;
-            }
-            limpiarCajas();
-        }        
-        if (!encontrado) {
-            JOptionPane.showMessageDialog(null, "No se encontró el alumno con el número de control especificado.", "Error", JOptionPane.ERROR_MESSAGE);
-        }        
-      
+        }
+        
+        limpiarCajas();
+        
     }//GEN-LAST:event_btnBuscarMouseClicked
 
-    
-       private void limpiarCajas(){
+    private void limpiarCajas(){
         this.txtBuscarAlumno.setText("");  
     }
-       
-       
-               
+          
+    // Método para buscar por número de control
+    public boolean buscarPorNumeroControl(String numeroControl) {
+        for (int i = 0; i < tblAlumnos.getRowCount(); i++) {
+            if (tblAlumnos.getValueAt(i, 0).equals(numeroControl)) {
+                tblAlumnos.setRowSelectionInterval(i, i);          
+                return true;
+            }
+        }
+        return false;
+    }
+                   
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
-     
-
+    
+        File excelFile = new File("alumnos.xlsx");
+        if (isFileOpen(excelFile)) {
+            JOptionPane.showMessageDialog(this, "El archivo de Excel está abierto por otro programa. Ciérrelo y vuelva a intentarlo.");
+            return;
+        }
        int fila = this.tblAlumnos.getSelectedRow();
     if (fila != -1) {
         String numControl = this.tblAlumnos.getValueAt(fila, 0).toString();
@@ -325,6 +414,8 @@ public class FMenuAlumnos extends javax.swing.JFrame {
 
         FActualizarAlumnos objAgregarAlumno = new FActualizarAlumnos(this.dtm);
         objAgregarAlumno.setFilaSeleccionada(fila); // Asignar la fila seleccionada
+            System.out.print(fila);
+
         objAgregarAlumno.EditForm(numControl, nombre, apellido, semestre, carrera, tipo, descripcion, fechaProtocolario);
         objAgregarAlumno.setVisible(true);
     } else {
@@ -333,6 +424,12 @@ public class FMenuAlumnos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarMouseClicked
 
     private void btnAgregarNuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarNuevoMouseClicked
+        
+             File excelFile = new File("alumnos.xlsx");
+        if (isFileOpen(excelFile)) {
+            JOptionPane.showMessageDialog(this, "El archivo de Excel está abierto por otro programa. Ciérrelo y vuelva a intentarlo.");
+            return;
+        }
         FAgregarAlumno objAgregarAlumno = new FAgregarAlumno(this.dtm);
         objAgregarAlumno.setVisible(true);
     }//GEN-LAST:event_btnAgregarNuevoMouseClicked
@@ -368,6 +465,7 @@ public class FMenuAlumnos extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
+       
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

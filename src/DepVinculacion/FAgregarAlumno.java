@@ -6,9 +6,7 @@ package DepVinculacion;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
 
 public class FAgregarAlumno extends javax.swing.JFrame {
 
@@ -223,9 +221,37 @@ public class FAgregarAlumno extends javax.swing.JFrame {
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         // TODO add your handling code here:
-        //boton para guardar un nuevo registro
-        guardarRegistro();
-        this.txtNumControl.requestFocus(); 
+        
+        
+    ArchivoTexto objArchivo =new ArchivoTexto();
+    //boton para guardar un nuevo registro
+    this.txtNumControl.requestFocus(); 
+  
+        // Obtener la fecha seleccionada
+    Date fechaSeleccionada = jCalendar1.getDate();
+
+    // Convertir la fecha seleccionada a un formato legible
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    String fechaProtocolario = dateFormat.format(fechaSeleccionada);
+
+        String numeroControl = this.txtNumControl.getText();
+        String nombre = this.txtNombre.getText();
+        String apellidos = this.txtApellidos.getText();
+        String semestre = (String) this.txtSemestre.getSelectedItem();
+        String carrera = (String) this.txtCarrera.getSelectedItem();
+        String tipo =  (String) this.txtTipo.getSelectedItem();
+        String descripcion = this.txtDescripcion.getText();
+    
+                 
+        DefaultTableModel modelo = dtm;
+
+    
+    boolean dato=objArchivo.guardarRegistro(numeroControl, nombre, apellidos, semestre, carrera, tipo, descripcion, fechaProtocolario);
+        
+    if(dato){
+        limpiarCajas();
+        modelo.addRow(new Object[]{numeroControl, nombre, apellidos, semestre, carrera, tipo, descripcion, fechaProtocolario});        
+    }
         
     }//GEN-LAST:event_btnGuardarMouseClicked
 
@@ -234,96 +260,6 @@ public class FAgregarAlumno extends javax.swing.JFrame {
                         dispose();
 
     }//GEN-LAST:event_btbCancelarMouseClicked
-
-    private javax.swing.JComboBox<String> comboBox;
-
-    private void guardarRegistro(){
-        
-        // Obtener la fecha seleccionada
-    Date fechaSeleccionada = jCalendar1.getDate();
-
-    // Convertir la fecha seleccionada a un formato legible
-    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    String fechaProtocolario = dateFormat.format(fechaSeleccionada);
-
-    // Utiliza el valor de fechaSeleccionadaStr donde lo necesites
-
-        ArchivoTexto objArchivoTexto =  new ArchivoTexto();
-        Alumno objAlumno = new Alumno();
-        String numeroControl = this.txtNumControl.getText();
-        String nombre = this.txtNombre.getText();
-        String apellidos = this.txtApellidos.getText();
-        String semestre = (String) this.txtSemestre.getSelectedItem();
-        String carrera = (String) txtCarrera.getSelectedItem();
-        String tipo =  (String) this.txtTipo.getSelectedItem();
-        String descripcion = this.txtDescripcion.getText();
-        
-        if (!numeroControl.matches("\\d+")) {
-        JOptionPane.showMessageDialog(null, "El número de control debe contener solo números.", "Error", JOptionPane.ERROR_MESSAGE);
-        return; // Salir del método si el número de control no es válido
-          }else{
-              
-            if (numeroControl.isEmpty() || nombre.isEmpty() || apellidos.isEmpty() 
-                    || semestre.isEmpty() || carrera.isEmpty() || tipo.isEmpty() 
-                    || descripcion.isEmpty()) {
-                 JOptionPane.showMessageDialog(null, "Por favor complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-             }else{            
-                objArchivoTexto.abrirArchivo("db/alumnos.txt",'r');   
-                    
-                if(objArchivoTexto.buscarRegistro((numeroControl))){
-                     JOptionPane.showMessageDialog(this, "El alumno ya existe");
-                }else{
-                    objAlumno.setNumeroControl(Integer.parseInt(numeroControl));
-
-                    objAlumno.setNombre(nombre);
-                    objAlumno.setApellidos(apellidos);        
-                    objAlumno.setSemestre(semestre);    
-                    objAlumno.setCarrera(carrera);
-                    objAlumno.setTipo(tipo);
-                    objAlumno.setDescripcion(descripcion);
-                    objAlumno.setFechaProtocolario(fechaProtocolario);
-                    //Abrir el archivo para escritura        
-                    objArchivoTexto.abrirArchivo("db/alumnos.txt",'w');
-                    /*Guardar el registro en el archivo
-                      Primero formo el registro
-                    */
-                    String registro = String.valueOf(objAlumno.getNumeroControl()) + ","+
-                                      objAlumno.getNombre()+ "," +
-                                      objAlumno.getApellidos()+ "," +
-                                      objAlumno.getSemestre()+ "," +
-                                      objAlumno.getCarrera()+ "," +
-                                      objAlumno.getTipo()+ "," +                                   
-                                      objAlumno.getDescripcion()+","+
-                                      objAlumno.getFechaProtocolario()+ "\n";
-
-                    objArchivoTexto.escribirRegistro(registro);
-                    //Cerrar el archivo
-                    objArchivoTexto.cerrarArchivo('w');  
-
-                    //Lo subimos a la tabla        
-                    String[] fila={
-                    String.valueOf(objAlumno.getNumeroControl()),
-                                   objAlumno.getNombre(),
-                                   objAlumno.getApellidos(),
-                    String.valueOf(objAlumno.getSemestre()), 
-                                   objAlumno.getCarrera(),
-                                   objAlumno.getTipo(),
-                                   objAlumno.getDescripcion(), 
-                                   objAlumno.getFechaProtocolario()};
-                    this.dtm.addRow(fila);
-                    
-                    limpiarCajas();
-        
-            JOptionPane.showMessageDialog(this, "Se ha agregado el alumno correctamente");
-
-        }
-      
-        }
-       
-         }      
-       
-    }
-    
     
     private void limpiarCajas(){
         this.txtNumControl.setText("");

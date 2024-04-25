@@ -125,7 +125,7 @@ public class ArchivoTexto {
 
             JOptionPane.showMessageDialog(null, "Alumno eliminado correctamente");
               // Eliminar fila de la tabla
-                return filaSeleccionada;
+                return 1;
 
 
         } catch (IOException e) {

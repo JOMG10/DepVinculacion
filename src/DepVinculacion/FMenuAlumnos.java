@@ -367,41 +367,51 @@ public static boolean isFileOpen(File file) {
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     
-     private void eliminarFilaCompleta() {
-        int filaSeleccionada = tblAlumnos.getSelectedRow();
-        if (filaSeleccionada != -1) {
-            
-                System.out.println("Fila seleccionada en la tabla: " + filaSeleccionada + 1); // Imprimir el índice de fila seleccionado
+   private void eliminarFilaCompleta() {
+    int filaSeleccionada = tblAlumnos.getSelectedRow();
+    if (filaSeleccionada != -1) {
+        // Ajustar el índice de la fila seleccionada para omitir la fila de los títulos
+        int indiceFilaExcel = filaSeleccionada + 1;
 
-            // Eliminar fila del archivo Excel
-            try (InputStream file = new FileInputStream("alumnos.xlsx");
-                 XSSFWorkbook workbook = new XSSFWorkbook(file)) {
+        // Eliminar fila del archivo Excel
+        try (InputStream file = new FileInputStream("alumnos.xlsx");
+             XSSFWorkbook workbook = new XSSFWorkbook(file)) {
 
-                XSSFSheet sheet = workbook.getSheetAt(0);
-                sheet.removeRow(sheet.getRow(filaSeleccionada));
+            XSSFSheet sheet = workbook.getSheetAt(0);
+            int ultimaFila = sheet.getLastRowNum();
+
+            if (indiceFilaExcel < ultimaFila) {
+                // Eliminar la fila del archivo Excel
+                sheet.removeRow(sheet.getRow(indiceFilaExcel));
 
                 // Desplazar las filas hacia arriba para que no quede vacía
-                sheet.shiftRows(filaSeleccionada + 2, sheet.getLastRowNum(), -1);
-
-                try (FileOutputStream outFile = new FileOutputStream(new File("alumnos.xlsx"))) {
-                    workbook.write(outFile);
-                }
-
-                JOptionPane.showMessageDialog(this, "Fila eliminada del archivo Excel");
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Error al eliminar la fila del archivo Excel");
-                return;
+                sheet.shiftRows(indiceFilaExcel + 1, ultimaFila, -1);
+            } else {
+                // Si es la última fila, simplemente elimina la fila sin desplazar
+                sheet.removeRow(sheet.getRow(indiceFilaExcel));
             }
 
-            // Eliminar fila de la tabla
-            dtm.removeRow(filaSeleccionada);
-            JOptionPane.showMessageDialog(this, "Fila eliminada de la tabla");
-        } else {
-            JOptionPane.showMessageDialog(this, "Selecciona una fila para eliminar");
+            try (FileOutputStream outFile = new FileOutputStream(new File("alumnos.xlsx"))) {
+                workbook.write(outFile);
+            }
+
+            JOptionPane.showMessageDialog(this, "Fila eliminada del archivo Excel");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al eliminar la fila del archivo Excel");
+            return;
         }
+
+        // Eliminar fila de la tabla
+        dtm.removeRow(filaSeleccionada);
+        JOptionPane.showMessageDialog(this, "Fila eliminada de la tabla");
+    } else {
+        JOptionPane.showMessageDialog(this, "Selecciona una fila para eliminar");
     }
+}
+
+
 
      
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked

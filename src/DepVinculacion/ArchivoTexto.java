@@ -49,12 +49,16 @@ public class ArchivoTexto {
                     try (InputStream archivo = new FileInputStream("db/alumnos.xlsx");
                     XSSFWorkbook libro = new XSSFWorkbook(archivo)) {
 
+                        
+                    int numControl = 0;
+
+                    numControl = Integer.parseInt(numeroControl);
                     XSSFSheet hoja = libro.getSheetAt(0);
                     int ultimaFila = hoja.getLastRowNum() + 1; // Obtener la última fila y sumar 1 para agregar la nueva fila              
 
                     // Crear la nueva fila y agregar los datos
                     Row nuevaFila = hoja.createRow(ultimaFila); 
-                    nuevaFila.createCell(0).setCellValue(numeroControl);
+                    nuevaFila.createCell(0).setCellValue(numControl);
                     nuevaFila.createCell(1).setCellValue(nombre);
                     nuevaFila.createCell(2).setCellValue(apellidos);
                     nuevaFila.createCell(3).setCellValue(semestre);
@@ -113,21 +117,23 @@ public class ArchivoTexto {
                 // Si es la última fila, simplemente elimina la fila sin desplazar
                 sheet.removeRow(sheet.getRow(indiceFilaExcel));
             }
+            
 
             try (FileOutputStream outFile = new FileOutputStream(new File("db/alumnos.xlsx"))) {
                 workbook.write(outFile);
             }
 
             JOptionPane.showMessageDialog(null, "Alumno eliminado correctamente");
+              // Eliminar fila de la tabla
+                return filaSeleccionada;
+
 
         } catch (IOException e) {
             e.printStackTrace();
            
         }
 
-        // Eliminar fila de la tabla
-        return filaSeleccionada;
-        
+      
           }
     } else {
         JOptionPane.showMessageDialog(null, "Selecciona una fila para eliminar");

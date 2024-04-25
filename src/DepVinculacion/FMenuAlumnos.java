@@ -345,17 +345,19 @@ public static boolean isFileOpen(File file) {
         this.txtBuscarAlumno.setText("");  
     }
           
-    // Método para buscar por número de control
-    public boolean buscarPorNumeroControl(String numeroControl) {
-        for (int i = 0; i < tblAlumnos.getRowCount(); i++) {
-              int numControl = Integer.parseInt(numeroControl);
-            if (tblAlumnos.getValueAt(i, 0).equals(numControl)) {
-                tblAlumnos.setRowSelectionInterval(i, i);          
-                return true;
-            }
+// Método para buscar por número de control
+public boolean buscarPorNumeroControl(String numeroControl) {
+    for (int i = 0; i < tblAlumnos.getRowCount(); i++) {
+        // Convertir el valor de la celda a String para comparar
+        String numControl = tblAlumnos.getValueAt(i, 0).toString();
+        if (numControl.equals(numeroControl)) {
+            tblAlumnos.setRowSelectionInterval(i, i);
+            return true;
         }
-        return false;
     }
+    return false;
+}
+
                    
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked

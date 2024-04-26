@@ -323,12 +323,9 @@ public static boolean isFileOpen(File file) {
      
         if (fila != 0) {
          dtm.removeRow(filaSeleccionada);
-         }
-
-        
+         }       
    
     }//GEN-LAST:event_btnEliminarMouseClicked
-
 
      
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
@@ -338,8 +335,7 @@ public static boolean isFileOpen(File file) {
         if(!dato){
             JOptionPane.showMessageDialog(this, "No se encontro ningun alumno con ese numero de control");
 
-        }
-        
+        }        
         limpiarCajas();
         
     }//GEN-LAST:event_btnBuscarMouseClicked

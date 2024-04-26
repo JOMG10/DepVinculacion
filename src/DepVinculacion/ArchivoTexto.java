@@ -77,8 +77,7 @@ public class ArchivoTexto {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }  
-                    return true;                    
-
+                    return true;                  
 
             }
 

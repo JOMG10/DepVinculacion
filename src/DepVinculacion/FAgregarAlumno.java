@@ -220,9 +220,7 @@ public class FAgregarAlumno extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-        // TODO add your handling code here:
-        
-        
+            
     ArchivoTexto objArchivo =new ArchivoTexto();
     //boton para guardar un nuevo registro
     this.txtNumControl.requestFocus(); 
